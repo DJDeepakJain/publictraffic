@@ -5,6 +5,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:fcamera/model/data.dart';
 import 'package:fcamera/screens/dashboard.dart';
+import 'package:flutter_tesseract_ocr/flutter_tesseract_ocr.dart';
 import 'package:image_picker/image_picker.dart';
 
 class Camera extends StatefulWidget {
@@ -23,9 +24,13 @@ class _CameraState extends State<Camera> {
   final TextEditingController _desc = TextEditingController();
 
   late String status;
+  late String text;
 
   late String reward;
-  bool textScanning = true;
+  bool _scanning = false;
+  String _extractText = '';
+
+
 
 
   final CollectionReference _reference =
@@ -46,7 +51,7 @@ class _CameraState extends State<Camera> {
         ),
         body: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding:  EdgeInsets.all(8.0),
             child: Column(
               children: [
                 Center(
@@ -64,40 +69,65 @@ class _CameraState extends State<Camera> {
                   controller: _desc,
                   decoration:
                       const InputDecoration(label: Text("Enter Description")),
+
                 ),
-                ElevatedButton(
-                    onPressed: () async {
-                      String uniqueName =
-                          DateTime.now().millisecondsSinceEpoch.toString();
-                      Reference ref = FirebaseStorage.instance.ref();
-                      Reference image = ref.child(uniqueName);
+                
 
-                      await image.putFile(File(widget.image!.path));
-                      _image = await image.getDownloadURL();
-                      info.title = _title.text;
-                      info.desc = _desc.text;
-                      info.date = DateTime.now();
-                      status = "Approval Pending";
-                      reward = "Processing";
-                      if (widget.image != null) {
-                        Image.file(File(widget.image!.path));
-                      }
+                SizedBox(height: 20,),
+                _scanning ? const Center():Text('Text in the Image:\n' + _extractText),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment:MainAxisAlignment.spaceEvenly,
 
-                      Map<String, dynamic> dataToSend = {
-                        'Title': info.title,
-                        'Desc': info.desc,
-                        'Date': info.date,
-                        'Photos': _image,
-                        'Status': status,
-                        'Reward': reward,
-                      };
-
-                      _reference.add(dataToSend);
-                      // ignore: use_build_context_synchronously
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => Dashboard()));
-                    },
-                    child: const Text('Upload'))
+                    children: [
+                      ElevatedButton(onPressed: () async{
+                         setState(() {
+                          _scanning=true;
+                        });
+                        _extractText = await FlutterTesseractOcr.extractText(widget.image!.path);
+                        setState(() {
+                          _scanning = false;
+                        });
+                      }, child: const Text('Scan the text')),
+                      ElevatedButton(
+                          onPressed: () async {
+                            String uniqueName =
+                                DateTime.now().millisecondsSinceEpoch.toString();
+                            Reference ref = FirebaseStorage.instance.ref();
+                            Reference image = ref.child(uniqueName);
+                
+                            await image.putFile(File(widget.image!.path));
+                            _image = await image.getDownloadURL();
+                            info.title = _title.text;
+                            info.desc = _desc.text;
+                            info.date = DateTime.now();
+                            status = "Approval Pending";
+                            reward = "Processing";
+                            text = '';
+                            if (widget.image != null) {
+                              Image.file(File(widget.image!.path));
+                            }
+                
+                            Map<String, dynamic> dataToSend = {
+                              'Title': info.title,
+                              'Desc': info.desc,
+                              'Date': info.date,
+                              'Photos': _image,
+                              'Status': status,
+                              'Reward': reward,
+                              'Text': _extractText
+                            };
+                
+                            _reference.add(dataToSend);
+                            // ignore: use_build_context_synchronously
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) => Dashboard()));
+                          },
+                          child: const Text('Upload')),
+                    ],
+                  ),
+                )
               ],
             ),
           ),

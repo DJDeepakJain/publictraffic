@@ -13,6 +13,7 @@ class Preview extends StatelessWidget {
   final TextEditingController _desc = TextEditingController();
   late String status;
   late String reward;
+  bool _scanning=false;
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +37,7 @@ class Preview extends StatelessWidget {
               decoration:
                   const InputDecoration(label: Text("Enter Description")),
             ),
+
             ElevatedButton(onPressed: () {}, child: const Text('Upload'))
           ],
         ),

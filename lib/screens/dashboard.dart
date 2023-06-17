@@ -33,7 +33,8 @@ class Dashboard extends StatelessWidget {
                         'Desc': e['Desc'],
                         'Date': e['Date'],
                         'Photos': e['Photos'],
-                        'Reward': e['Reward']
+                        'Reward': e['Reward'],
+                        'Text':e['Text']
                       })
                   .toList();
 
@@ -48,6 +49,7 @@ class Dashboard extends StatelessWidget {
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: ListTile(
+                            isThreeLine: true,
                             leading: CircleAvatar(
                               backgroundColor: Colors.amber,
                               backgroundImage:
@@ -56,6 +58,7 @@ class Dashboard extends StatelessWidget {
                             title: Text('${thisItem['Title']}'),
                             subtitle: Text('${thisItem['Desc']}'),
                             trailing: Text('${thisItem['Reward']}'),
+
                             onTap: () {
                               Navigator.of(context).push(MaterialPageRoute(
                                   builder: (context) =>
