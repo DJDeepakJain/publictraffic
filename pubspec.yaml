@@ -43,6 +43,9 @@ dependencies:
   camera: ^0.8.1+7
   path: ^1.8.3
   flutter_tesseract_ocr: ^0.4.23
+  geolocator: ^9.0.2
+  geocoding: ^2.1.0
+  fluttertoast: ^8.2.2
 
 
 
