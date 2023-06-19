@@ -34,6 +34,9 @@ class _CameraState extends State<Camera> {
   late String reward;
   bool _scanning = false;
   String _extractText = '';
+  late double _latitude;
+  late double _longitude;
+
 
 Future<Position> _determinePosition() async{
   bool serviceEnabled;
@@ -64,6 +67,9 @@ Future<Position> _determinePosition() async{
     setState(() {
       currentPosition = position;
       currentAdress = '${place.locality},${place.country}';
+      _latitude = position.latitude;
+      _longitude = position.longitude;
+      
     });
   }
   catch(e){
@@ -132,7 +138,7 @@ Future<Position> _determinePosition() async{
                       }, child: const Text('Scan the text')),
                       ElevatedButton(
                           onPressed: () async {
-                            Position position= _determinePosition() as Position;
+                            _determinePosition();
                             String uniqueName =
                                 DateTime.now().millisecondsSinceEpoch.toString();
                             Reference ref = FirebaseStorage.instance.ref();
@@ -158,8 +164,10 @@ Future<Position> _determinePosition() async{
                               'Status': status,
                               'Reward': reward,
                               'Text': _extractText,
-                              'Latitude':position.latitude,
-                              'Longitude':position.longitude
+                              'Latitude':_latitude,
+                              'Longitude':_longitude
+
+
 
 
                             };

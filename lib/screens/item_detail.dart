@@ -75,6 +75,15 @@ class ItemDetail extends StatelessWidget {
                         'Reward: ${data['Reward']}',
                         style: const TextStyle(fontSize: 20),
                       ),
+                      SizedBox(height: 20,),
+                      Text(
+                        'Latitude: ${data['Latitude']}',
+                        style: const TextStyle(fontSize: 20),
+                      ),
+                      Text(
+                        'Longitude: ${data['Longitude']}',
+                        style: const TextStyle(fontSize: 20),
+                      ),
                       SizedBox(height: 20,)
                     ],
                   ));
