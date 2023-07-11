@@ -3,15 +3,15 @@
 import 'dart:io';
 
 import 'package:camera/camera.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fcamera/model/data.dart';
 import 'package:fcamera/screens/image_viewer.dart';
 
 class Camera extends StatefulWidget {
-  final List<CameraDescription>? cameras;
+  List<CameraDescription>? cameras;
+  XFile? image;
 
-  const Camera({super.key, this.cameras});
+   Camera({super.key,this.image});
 
   @override
   State<Camera> createState() => _CameraState();
@@ -19,7 +19,7 @@ class Camera extends StatefulWidget {
 
 class _CameraState extends State<Camera> {
   late CameraController cameraController;
-  XFile? pictureFile;
+  late XFile pictureFile;
 
   late Info info;
   late String status;
@@ -37,9 +37,7 @@ class _CameraState extends State<Camera> {
       }
       setState(() {});
     }).catchError((e) {
-      if (kDebugMode) {
         print(e);
-      }
     });
     info = Info(title: "", date: DateTime.now(), desc: "", photos: "");
   }

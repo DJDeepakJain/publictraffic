@@ -13,7 +13,7 @@ import 'package:image_picker/image_picker.dart';
 
 class Camera extends StatefulWidget {
   final XFile? image;
-  const Camera({super.key, required this.image});
+  const Camera({super.key, this.image});
 
   @override
   State<Camera> createState() => _CameraState();
@@ -101,11 +101,12 @@ Future<Position> _determinePosition() async{
             child: Column(
               children: [
                 Center(
-                  child: SizedBox(
-                    height: 250,
-                    width: 250,
-                    child: Image.file(File(widget.image!.path)),
-                  ),
+                  // child: SizedBox(
+                  //   height: 250,
+                  //   width: 250,
+                  //   child: Image.file(File(widget.image!.path)
+                  //   ),
+                  // ),
                 ),
                 TextField(
                     controller: _title,
