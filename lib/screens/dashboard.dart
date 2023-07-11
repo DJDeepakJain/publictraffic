@@ -34,7 +34,6 @@ class Dashboard extends StatelessWidget {
                         'Date': e['Date'],
                         'Photos': e['Photos'],
                         'Reward': e['Reward'],
-                        'Text':e['Text'],
                         'Latitude':e['Latitude'],
                         'Longitude':e['Longitude']
                         

@@ -1,11 +1,11 @@
 class Info {
-  String title;
+  String vehicleNo;
   DateTime date;
-  String desc;
+  String violation;
   String photos;
   Info(
-      {required this.title,
+      {required this.vehicleNo,
       required this.date,
-      required this.desc,
+      required this.violation,
       required this.photos});
 }

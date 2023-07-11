@@ -37,9 +37,9 @@ class ItemDetail extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       if (data['Photos'] != null)
-                        Center(
-                          child: Padding(
-                            padding: const EdgeInsets.all(20.0),
+                        Padding(
+                          padding: const EdgeInsets.all(20.0),
+                          child: Center(
                             child: SizedBox(
                                 height: 300,
                                 width: 300,
@@ -60,13 +60,7 @@ class ItemDetail extends StatelessWidget {
                       const SizedBox(
                         height: 20,
                       ),
-                      Text(
-                        "Text in image:\n ${data['Text']}",
-                        style: const TextStyle(fontSize: 15),
-                      ),
-                       const SizedBox(
-                        height: 20,
-                      ),
+
                       Text(
                         'Status: ${data['Status']}',
                         style: const TextStyle(fontSize: 20),
