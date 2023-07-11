@@ -23,7 +23,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
     // VideoPlayers(video: null),
     const Profiles()
   ];
-  int _selectedIndex = 1;
+  int _selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
