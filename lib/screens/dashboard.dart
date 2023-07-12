@@ -34,6 +34,8 @@ class Dashboard extends StatelessWidget {
                         'Date': e['Date'],
                         'Photos': e['Photos'],
                         'Reward': e['Reward'],
+                        'Locality': e['Locality'],
+                        'PostalCode': e['PostalCode'],
                         'Latitude':e['Latitude'],
                         'Longitude':e['Longitude']
                         
@@ -57,8 +59,8 @@ class Dashboard extends StatelessWidget {
                               backgroundImage:
                                   NetworkImage('${thisItem['Photos']}'),
                             ),
-                            title: Text('${thisItem['Title']}'),
-                            subtitle: Text('${thisItem['Desc']}'),
+                            title: Text('${thisItem['VehicleNo']}'),
+                            subtitle: Text('${thisItem['Violation']}'),
                             trailing: Text('${thisItem['Reward']}'),
 
                             onTap: () {

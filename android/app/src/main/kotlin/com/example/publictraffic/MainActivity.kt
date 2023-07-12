@@ -1,4 +1,4 @@
-package com.example.fcamera
+package com.example.publictraffic
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -50,11 +50,11 @@ class ItemDetail extends StatelessWidget {
                         height: 50,
                       ),
                       Text(
-                        "Title: ${data['Title']}",
+                        "Vehicle No: ${data['VehicleNo']}",
                         style: const TextStyle(fontSize: 20),
                       ),
                       Text(
-                        "Description: ${data['Desc']}",
+                        "Violation: ${data['Violation']}",
                         style: const TextStyle(fontSize: 20),
                       ),
                       const SizedBox(
@@ -69,7 +69,13 @@ class ItemDetail extends StatelessWidget {
                         'Reward: ${data['Reward']}',
                         style: const TextStyle(fontSize: 20),
                       ),
-                      SizedBox(height: 20,),
+                      const SizedBox(height: 20,),
+                      Text(
+                        'Address:${data['Locality']}'
+                      ),
+                      Text(
+                          'Postal Code:${data['PostalCode']}'
+                      ),
                       Text(
                         'Latitude: ${data['Latitude']}',
                         style: const TextStyle(fontSize: 20),

@@ -1,62 +1,33 @@
 {
   "project_info": {
-    "project_number": "375869716868",
-    "project_id": "djcameraa",
-    "storage_bucket": "djcameraa.appspot.com"
+    "project_number": "898914552686",
+    "project_id": "djcamera-6cb73",
+    "storage_bucket": "djcamera-6cb73.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:375869716868:android:47030419525bc60a4805d1",
+        "mobilesdk_app_id": "1:898914552686:android:1f75b637ed199e5227cf7f",
         "android_client_info": {
-          "package_name": "com.example.fcamera"
+          "package_name": "com.example.publictraffic"
         }
       },
       "oauth_client": [
         {
-          "client_id": "375869716868-0mmci6kj7iiqggev02jorcec3aba7pb7.apps.googleusercontent.com",
+          "client_id": "898914552686-e61bghj1q2tm5p1ik39qbmheiavadi5n.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDfY5wW7DcvUvKIZOSYTV-sCVBEOC4ue8Y"
+          "current_key": "AIzaSyAPCxrqiXVW-5l73GXJwjR8D-i4DbHZ0zA"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "375869716868-0mmci6kj7iiqggev02jorcec3aba7pb7.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:375869716868:android:80c86fde040911d74805d1",
-        "android_client_info": {
-          "package_name": "com.example.flutter_camera"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "375869716868-0mmci6kj7iiqggev02jorcec3aba7pb7.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyDfY5wW7DcvUvKIZOSYTV-sCVBEOC4ue8Y"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "375869716868-0mmci6kj7iiqggev02jorcec3aba7pb7.apps.googleusercontent.com",
+              "client_id": "898914552686-e61bghj1q2tm5p1ik39qbmheiavadi5n.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

@@ -13,7 +13,8 @@ import '../model/data.dart';
 import 'dashboard.dart';
 
 class Camera extends StatefulWidget {
-  const Camera({super.key,});
+  final XFile? image;
+  const Camera({super.key, this.image,});
 
   @override
   _CameraState createState() => _CameraState();
@@ -33,9 +34,10 @@ class _CameraState extends State<Camera> {
   late double _latitude;
   late double _longitude;
   String currentAdress = '';
+  String postalCode = '';
   late Position currentPosition;
   
-  TextEditingController _vehicleNo = TextEditingController();
+  final TextEditingController _vehicleNo = TextEditingController();
   final TextEditingController _violation = TextEditingController();
 
 
@@ -69,14 +71,13 @@ class _CameraState extends State<Camera> {
   }
 
   void binarizeImage() async{
-    if (imageFile == null) return;
 
-    img.Image? image = img.decodeImage(imageFile!.readAsBytesSync());
+    img.Image? image = img.decodeImage(imageFile.readAsBytesSync());
     img.Image grayscaleImage = img.grayscale(image!);
     binaryImage = threshold(grayscaleImage, 128);
 
     // Label the binary image
-    img.Image ximage = binaryImage; // Your img.Image object
+    // img.Image ximage = binaryImage; // Your img.Image object
     XFile? xFile = convertImageToXFile(image);
     getRecognizedText(xFile!);
 
@@ -205,19 +206,15 @@ class _CameraState extends State<Camera> {
           children: <Widget>[
             if(scanning) const CircularProgressIndicator(),
             if(!scanning && image == null)
-              Padding(
-                padding: const EdgeInsets.all(10.0),
+              const Padding(
+                padding: EdgeInsets.all(10.0),
 
                 child: Center(
-                  child: Container(
-                      height: 350,
-                      width: 350,
-                      color:Colors.grey
-                  ),
+                  child:  CircularProgressIndicator(),
                 ),
               ),
             if(image != null)
-              Center(child: Container(height: 350,width: 350, child: Image.file(File(image!.path))
+              Center(child: SizedBox(height: 350,width: 350, child: Image.file(File(image!.path))
               )
               ),
 
@@ -226,22 +223,25 @@ class _CameraState extends State<Camera> {
             //   onPressed: () => getImage(ImageSource.gallery),
             //   child: const Text('Pick an Image'),
             // ),
-        SizedBox(height: 20,),
-            Row(
-              children: [
-                Text("Vehicle No:  $scannedText"),
-                IconButton(
-                    onPressed: (){
-                      final text = openDialog();
-                      setState(() {
-                        scannedText;
-                      });
-                    },
-                    icon:Icon(Icons.edit)
-                )
-              ],
+        const SizedBox(height: 20,),
+            Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: Row(
+                children: [
+                  Text("Vehicle No:  $scannedText"),
+                  IconButton(
+                      onPressed: (){
+                        final text = openDialog();
+                        setState(() {
+                          scannedText;
+                        });
+                      },
+                      icon:const Icon(Icons.edit)
+                  )
+                ],
+              ),
             ),
-            SizedBox(height: 20,),
+            const SizedBox(height: 20,),
             TextField(
               controller: _violation,
               decoration:
@@ -255,7 +255,7 @@ class _CameraState extends State<Camera> {
                   DateTime.now().millisecondsSinceEpoch.toString();
                   Reference ref = FirebaseStorage.instance.ref();
                   Reference image = ref.child(uniqueName);
-
+                  await image.putFile(File(widget.image!.path));
                   await image.putFile(imageFile);
                   _image = await image.getDownloadURL();
                   info.vehicleNo = scannedText;
@@ -266,12 +266,14 @@ class _CameraState extends State<Camera> {
 
 
                   Map<String, dynamic> dataToSend = {
-                    'Title': info.vehicleNo,
-                    'Desc': info.violation,
+                    'VehicleNo': info.vehicleNo,
+                    'Violation': info.violation,
                     'Date': info.date,
                     'Photos': _image,
                     'Status': status,
                     'Reward': reward,
+                    'Locality': currentAdress,
+                    'PostalCode':postalCode,
                     'Latitude':_latitude,
                     'Longitude':_longitude
 
@@ -281,7 +283,6 @@ class _CameraState extends State<Camera> {
                   };
 
                   _reference.add(dataToSend);
-                  // ignore: use_build_context_synchronously
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => Dashboard()));
                 },
