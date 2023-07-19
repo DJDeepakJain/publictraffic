@@ -5,7 +5,7 @@ class Info {
   String photos;
   Info(
       {required this.vehicleNo,
-      required this.date,
-      required this.violation,
-      required this.photos});
+        required this.date,
+        required this.violation,
+        required this.photos});
 }

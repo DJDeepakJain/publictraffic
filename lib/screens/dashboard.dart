@@ -2,7 +2,9 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:fcamera/screens/item_detail.dart';
+
+import 'item_detail.dart';
+
 
 class Dashboard extends StatelessWidget {
   Dashboard({super.key}) {
@@ -38,7 +40,6 @@ class Dashboard extends StatelessWidget {
                         'PostalCode': e['PostalCode'],
                         'Latitude':e['Latitude'],
                         'Longitude':e['Longitude']
-                        
                       })
                   .toList();
 

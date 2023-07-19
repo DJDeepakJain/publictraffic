@@ -1,5 +1,8 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:login_application/screens/camera_processing.dart';
+import 'package:login_application/screens/dashboard.dart';
+import 'package:login_application/screens/profile.dart';
 
 
 class BottomNavigation extends StatefulWidget {
@@ -11,10 +14,10 @@ class BottomNavigation extends StatefulWidget {
 
 class _BottomNavigationState extends State<BottomNavigation> {
   List screenPages = [
-    // Dashboard(),
-    // const Camera(),
+    Dashboard(),
+    const Camera(),
     // VideoPlayers(video: null),
-    // const Profiles()
+    const Profiles()
   ];
   int _selectedIndex = 1;
   @override
@@ -28,10 +31,10 @@ class _BottomNavigationState extends State<BottomNavigation> {
             Icons.dashboard,
             size: 30,
           ),
-      Icon(
-        Icons.camera,
-        size: 30,
-      ),
+          Icon(
+            Icons.camera,
+            size: 30,
+          ),
           // IconButton(
           //   onPressed: () async {
           //     ImagePicker imagePicker = ImagePicker();

@@ -1,6 +1,6 @@
 {
-    "name": "fcamera",
-    "short_name": "fcamera",
+    "name": "login_application",
+    "short_name": "login_application",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
