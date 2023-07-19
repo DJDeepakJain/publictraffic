@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "898914552686",
-    "project_id": "djcamera-6cb73",
-    "storage_bucket": "djcamera-6cb73.appspot.com"
+    "project_number": "866140771316",
+    "project_id": "publictraffic-73a51",
+    "storage_bucket": "publictraffic-73a51.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:898914552686:android:1f75b637ed199e5227cf7f",
+        "mobilesdk_app_id": "1:866140771316:android:b1eecb67ca274250715fa1",
         "android_client_info": {
           "package_name": "com.example.publictraffic"
         }
       },
       "oauth_client": [
         {
-          "client_id": "898914552686-e61bghj1q2tm5p1ik39qbmheiavadi5n.apps.googleusercontent.com",
+          "client_id": "866140771316-6d8b9d2oo71dbraetvvlu4ifs7vse53n.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAPCxrqiXVW-5l73GXJwjR8D-i4DbHZ0zA"
+          "current_key": "AIzaSyCEYVQqbh4asVCTPmzMf5FlVLorMayUgR8"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "898914552686-e61bghj1q2tm5p1ik39qbmheiavadi5n.apps.googleusercontent.com",
+              "client_id": "866140771316-6d8b9d2oo71dbraetvvlu4ifs7vse53n.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
