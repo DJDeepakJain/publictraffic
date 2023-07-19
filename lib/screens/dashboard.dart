@@ -29,8 +29,8 @@ class Dashboard extends StatelessWidget {
               List<Map> info = documents
                   .map((e) => {
                         'id': e.id,
-                        'Title': e['Title'],
-                        'Desc': e['Desc'],
+                        'Vehicle No': e['VehicleNo'],
+                        'Violation': e['Violation'],
                         'Date': e['Date'],
                         'Photos': e['Photos'],
                         'Reward': e['Reward'],

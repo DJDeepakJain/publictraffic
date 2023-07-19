@@ -1,11 +1,12 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:image/image.dart' as img;
 import 'package:google_ml_kit/google_ml_kit.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:firebase_storage/firebase_storage.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 
@@ -27,12 +28,12 @@ class _CameraState extends State<Camera> {
   img.Image binaryImage = img.Image(width:1, height:1); // Set initial size to avoid null
   String scannedText = '';
   bool scanning = false;
-  String? _image;
+  String _image = '';
   late String status;
   late String text;
   late String reward;
-  late double _latitude;
-  late double _longitude;
+  late double _latitude = 0.0;
+  late double _longitude = 0.0;
   String currentAdress = '';
   String postalCode = '';
   late Position currentPosition;
@@ -41,8 +42,8 @@ class _CameraState extends State<Camera> {
   final TextEditingController _violation = TextEditingController();
 
 
-  final CollectionReference _reference =
-  FirebaseFirestore.instance.collection('photos');
+  // final CollectionReference _reference =
+  // FirebaseFirestore.instance.collection('photos');
 
   late Info info;
 
@@ -132,6 +133,11 @@ class _CameraState extends State<Camera> {
     return binaryImage;
   }
 
+  Future<String> imageToBase64(File imageFile) async {
+    List<int> imageBytes = await imageFile.readAsBytes();
+    String base64Image = base64Encode(imageBytes);
+    return base64Image;
+  }
 
   Future<Position> _determinePosition() async{
     bool serviceEnabled;
@@ -251,13 +257,10 @@ class _CameraState extends State<Camera> {
             ElevatedButton(
                 onPressed: () async {
                   _determinePosition();
-                  String uniqueName =
-                  DateTime.now().millisecondsSinceEpoch.toString();
-                  Reference ref = FirebaseStorage.instance.ref();
-                  Reference image = ref.child(uniqueName);
-                  await image.putFile(File(widget.image!.path));
-                  await image.putFile(imageFile);
-                  _image = await image.getDownloadURL();
+                  //
+                  String imageText = await imageToBase64(imageFile);
+                  print("Image Text: $imageText");
+                  _image = imageText;
                   info.vehicleNo = scannedText;
                   info.violation = _violation.text;
                   info.date = DateTime.now();
@@ -282,7 +285,7 @@ class _CameraState extends State<Camera> {
 
                   };
 
-                  _reference.add(dataToSend);
+                  // _reference.add(dataToSend);
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => Dashboard()));
                 },
