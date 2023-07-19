@@ -51,7 +51,7 @@ class _LoginState extends State<Login> {
     return Scaffold(
         appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-    title: Text(widget.title),
+    title: Text('Login'),
     ),
     body: Form(
     key: _formKey,

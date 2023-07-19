@@ -10,9 +10,10 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_ml_kit/google_ml_kit.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:image/image.dart' as img;
-import 'package:login_application/model/Result.dart';
+
 
 import '../model/data.dart';
+import '../model/Result.dart';
 import 'dashboard.dart';
 
 class Camera extends StatefulWidget {
@@ -402,6 +403,9 @@ class _CameraState extends State<Camera> {
                     // info.vehicleNo = scannedText;
                     // info.violation = _violation.text;
                     // info.date = DateTime.now();
+                    String imageText = await imageToBase64(imageFile);
+                    print("Image Text: $imageText");
+                    _image = imageText;
                     status = "Approval Pending";
                     reward = "Processing";
 
