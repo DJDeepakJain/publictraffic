@@ -46,6 +46,7 @@ dependencies:
   geolocator: ^9.0.2
   geocoding: ^2.1.0
   fluttertoast: ^8.2.2
+  firebase_auth: ^4.6.3
 
 
 
