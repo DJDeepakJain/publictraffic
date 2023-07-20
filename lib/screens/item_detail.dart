@@ -1,18 +1,32 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 // ignore: must_be_immutable
 class ItemDetail extends StatelessWidget {
-  ItemDetail(this.itemId, {super.key}) {
-    _reference = FirebaseFirestore.instance.collection('photos').doc(itemId);
-    _futureData = _reference.get();
+  int ind;
+  ItemDetail(this.ind, {super.key}) {
+
+  }
+  Map<String, dynamic> infoList = {};
+  Future fetchData() async {
+    final uri = Uri.parse(
+        "https://hostel.abhosting.co.in/smart_school_src/Public_trafic/getVehicle/ind");
+    final response = await http.post(uri);
+
+    if (response.statusCode == 200) {
+      infoList = jsonDecode(response.body);
+
+      return infoList;
+    } else {
+      throw Exception("Failed to load");
+    }
   }
 
-  final String itemId;
-  late DocumentReference _reference;
-  late Future<DocumentSnapshot> _futureData;
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Details"),
@@ -21,7 +35,8 @@ class ItemDetail extends StatelessWidget {
         padding: const EdgeInsets.all(15.0),
         child: SingleChildScrollView(
           child: FutureBuilder(
-              future: _futureData,
+
+              future: fetchData(),
               builder: (BuildContext context, AsyncSnapshot snapshot) {
                 if (snapshot.hasError) {
                   return Center(
@@ -29,21 +44,20 @@ class ItemDetail extends StatelessWidget {
                   );
                 }
                 if (snapshot.hasData) {
-                  DocumentSnapshot documentSnapshot = snapshot.data;
-                  Map data = documentSnapshot.data() as Map;
+
 
                   return (Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      if (data['Photos'] != null)
+                      if (infoList.values.last[ind]['image'] != null)
                         Padding(
                           padding: const EdgeInsets.all(20.0),
                           child: Center(
                             child: SizedBox(
                                 height: 300,
                                 width: 300,
-                                child: Image.network(data['Photos'])),
+                                child: Image.network(infoList.values.last[ind]['image'])),
                           ),
                         ),
                       const SizedBox(
@@ -64,7 +78,7 @@ class ItemDetail extends StatelessWidget {
                         children: [
                           Text(" Vehicle No. ",
                             style: const TextStyle(fontSize: 20,fontWeight: FontWeight.w600),),
-                          Text("${data['Vehicle No.']}",
+                          Text("${infoList.values.last[ind]['vehicleNo']}",
                             style: const TextStyle(fontSize: 20,fontWeight: FontWeight.w600),)
                         ],
                       ),
@@ -76,7 +90,7 @@ class ItemDetail extends StatelessWidget {
                             style: const TextStyle(fontSize: 20,fontWeight: FontWeight.w600),
                           ),
                           Text(
-                            " ${data['Violation']}",
+                            " ${infoList.values.last[ind]['violation']}",
                             style: const TextStyle(fontSize: 16,fontWeight: FontWeight.w300),
                           ),
                         ],
@@ -104,7 +118,7 @@ class ItemDetail extends StatelessWidget {
                             style: const TextStyle(fontSize: 20,fontWeight: FontWeight.w600),
                           ),
                           Text(
-                            '${data['Status']}',
+                            '${infoList.values.last[ind]['status']}',
                             style: const TextStyle(fontSize: 16,fontWeight: FontWeight.w300),
                           ),
                         ],
@@ -121,7 +135,7 @@ class ItemDetail extends StatelessWidget {
                             style: const TextStyle(fontSize: 20,fontWeight: FontWeight.w600),
                           ),
                           Text(
-                            '${data['Reward']}',
+                            '${infoList.values.last[ind]['reward_amount']}',
                             style: const TextStyle(fontSize: 16,fontWeight: FontWeight.w300),
                           ),
                         ],
@@ -144,11 +158,11 @@ class ItemDetail extends StatelessWidget {
                             'Address: ',style: TextStyle(fontSize: 16,fontWeight: FontWeight.w300),
                           ),
                           Text(
-                              '${data['Locality']}'
+                              '${infoList.values.last[ind]['locality']}'
                           ),
 
                           Text(
-                              '${data['PostalCode']}'
+                              '${infoList.values.last[ind]['postalCode']}'
                           ),
                         ],
                       ),
@@ -164,7 +178,7 @@ class ItemDetail extends StatelessWidget {
                             style: const TextStyle(fontSize: 16,fontWeight: FontWeight.w300),
                           ),
                           Text(
-                            '${data['Latitude']}',
+                            '${infoList.values.last[ind]['latitude']}',
                             style: const TextStyle(fontSize: 16),
                           ),
                         ],
@@ -181,7 +195,7 @@ class ItemDetail extends StatelessWidget {
                             style: const TextStyle(fontSize: 16,fontWeight: FontWeight.w300),
                           ),
                           Text(
-                            '${data['Longitude']}',
+                            '${infoList.values.last[ind]['longitude']}',
                             style: const TextStyle(fontSize: 16),
                           ),
                         ],
