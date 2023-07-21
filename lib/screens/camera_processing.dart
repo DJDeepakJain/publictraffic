@@ -10,8 +10,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:image/image.dart' as img;
 import 'package:login_application/model/Result.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import '../model/data.dart';
 import 'dashboard.dart';
 
 class Camera extends StatefulWidget {
@@ -52,17 +50,11 @@ class _CameraState extends State<Camera> {
   String manufacturer = '';
 
   final TextEditingController _vehicleNo = TextEditingController();
-  final TextEditingController _violation = TextEditingController();
   TextEditingController ownername = TextEditingController();
-  // final TextEditingController _violation = TextEditingController();
   TextEditingController owner_Name = TextEditingController();
   TextEditingController adress = TextEditingController();
   TextEditingController manuModel = TextEditingController();
   TextEditingController bikeColor = TextEditingController();
-
-  // final CollectionReference _reference =
-  // FirebaseFirestore.instance.collection('photos');
-  // late Info info;
   late Result vehicleInfo;
 
 
@@ -70,7 +62,6 @@ class _CameraState extends State<Camera> {
   void initState() {
     // TODO: implement initState
     getImage(ImageSource.camera);
-  //  info = Info(vehicleNo: "", date: DateTime.now(), violation: "Triple riding", photos: "");
     vehicleInfo = Result(ownerName: "",colour: "",permanentAddress: "",manufacturerModel: "",manufacturer: "");
     super.initState();
   }
@@ -96,8 +87,6 @@ class _CameraState extends State<Camera> {
     img.Image grayscaleImage = img.grayscale(image!);
     binaryImage = threshold(grayscaleImage, 128);
 
-    // Label the binary image
-    // img.Image ximage = binaryImage; // Your img.Image object
     XFile? xFile = convertImageToXFile(image);
     getRecognizedText(xFile!);
 
@@ -198,9 +187,9 @@ class _CameraState extends State<Camera> {
   openDialog()=> showDialog<String>(
       context: context,
       builder: (context)=> AlertDialog(
+        semanticLabel: _vehicleNo.text = scannedText,
         content: TextField(
           controller: _vehicleNo,
-          decoration: InputDecoration(labelText: scannedText),
         ),
         actions: [
           TextButton(onPressed:
@@ -425,31 +414,11 @@ class _CameraState extends State<Camera> {
               child: ElevatedButton(
                 onPressed: () async {
                   _determinePosition();
-                  // String uniqueName = DateTime.now().millisecondsSinceEpoch.toString();
-                  // await images.putFile(File(image!.path));
-                  // _image = await images.getDownloadURL();
-                  // info.vehicleNo = scannedText;
-                  // info.violation = _violation.text;
-                  // info.date = DateTime.now();
+
                   status = "Approval Pending";
                   reward = "Processing";
 
-                    Map<String, dynamic> dataToSend = {
-                      // 'VehicleNo': info.vehicleNo,
-                      // 'Violation': info.violation,
-                      // 'Date': info.date,
-                      'Photos': _image,
-                      'Status': status,
-                      'Reward': reward,
-                      'Locality': currentAdress,
-                      'PostalCode':postalCode,
-                      'Latitude':_latitude,
-                      'Longitude':_longitude
-                    };
 
-                  // _reference.add(dataToSend);
-                  // Navigator.push(context,
-                  //     MaterialPageRoute(builder: (context) => Dashboard()));
                 },
                 child:OutlinedButton(
                   onPressed: postData,
@@ -462,7 +431,7 @@ class _CameraState extends State<Camera> {
             //     fontSize: 16,
             //     fontWeight: FontWeight.bold,
             //   ),
-            // ),
+            ),
           ],
         ),
       ),
