@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -66,7 +65,7 @@ class ItemDetail extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          if (thisItem['Photos'] != null)
+          thisItem['Photos'] !="" ?
             Padding(
               padding: const EdgeInsets.all(20.0),
               child: Center(
@@ -75,7 +74,16 @@ class ItemDetail extends StatelessWidget {
                     width: 300,
                     child: Image.network('${thisItem['Photos']}')),
               ),
+            ): Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Center(
+              child: Container(
+                  height: 300,
+                  width: 300,
+                color: Colors.amber,
+                    ),
             ),
+          ),
           const SizedBox(
             height: 50,
           ),
