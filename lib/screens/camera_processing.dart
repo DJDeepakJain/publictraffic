@@ -8,7 +8,11 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_ml_kit/google_ml_kit.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:image/image.dart' as img;
-import '../model/Result.dart';
+import 'package:login_application/model/Result.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../model/data.dart';
+import 'dashboard.dart';
 
 class Camera extends StatefulWidget {
   final XFile? image;
@@ -31,11 +35,17 @@ class _CameraState extends State<Camera> {
   late String reward='Processing';
   late double _latitude=123;
   late double _longitude=123;
+  String userid='';
   String currentAdress = '';
+  String trimmedText='';
   String postalCode = '775788';
   late Position currentPosition;
   String vehicleNo = '';
   String colour = '';
+  bool isVisible=false;
+  String permanent_address = '';
+  String owner_name = '';
+  String manufacturer_model = '';
   String permanentAddress = '';
   String ownerName = '';
   String manufacturerModel = '';
@@ -44,6 +54,8 @@ class _CameraState extends State<Camera> {
   final TextEditingController _vehicleNo = TextEditingController();
   final TextEditingController _violation = TextEditingController();
   TextEditingController ownername = TextEditingController();
+  // final TextEditingController _violation = TextEditingController();
+  TextEditingController owner_Name = TextEditingController();
   TextEditingController adress = TextEditingController();
   TextEditingController manuModel = TextEditingController();
   TextEditingController bikeColor = TextEditingController();
@@ -155,7 +167,7 @@ class _CameraState extends State<Camera> {
 
     permission = await Geolocator.checkPermission();
     if(permission == LocationPermission.denied){
-      permission =await Geolocator.requestPermission();
+      permission = await Geolocator.requestPermission();
     }
     if(permission == LocationPermission.denied){
       Fluttertoast.showToast(msg: 'Location Permission is denied');
@@ -214,35 +226,33 @@ class _CameraState extends State<Camera> {
     // bike_color.text = "$vehicleInfo.colour";
   }
   Future<String?> vehicleDetails() async {
-
-
-
+    buildShowDialog(context);
     var headers = {
-      'X-RapidAPI-Key': '4a89392d99msh2de7c2b89478908p1049e4jsna29ec6820645',
+      'X-RapidAPI-Key': 'f3a86a804amsh504cdacdd719efcp1f9567jsn62f85613f6d8',
       'X-RapidAPI-Host': 'vehicle-rc-information.p.rapidapi.com/',
       'Content-Type': 'application/json'
     };
     var request = https.Request('POST', Uri.parse('https://vehicle-rc-information.p.rapidapi.com/'));
-    request.body = json.encode({
-      "VehicleNumber": scannedText
 
+    String trimmedText = trimSpacesBetweenWords(scannedText);
+    print(trimmedText);
+
+    request.body = json.encode({
+      "VehicleNumber": trimmedText
     });
 
     request.headers.addAll(headers);
     https.StreamedResponse response = await request.send();
 
     if (response.statusCode == 200) {
-   //   print(await response.stream.bytesToString());
+      Navigator.pop(context);
+      isVisible = true;
       final  body1 = (await response.stream.bytesToString()) ;
       dynamic jsonData = jsonDecode(body1);
       print(scannedText);
       request.headers.addAll(headers);
       setState(() {
-        // colour = jsonData['result']['colour'];
-        // permanent_address = jsonData['result']['permanent_address'];
-        // owner_name = jsonData['result']['owner_name'];
-        // manufacturer_model = jsonData['result']['manufacturer_model'];
-        // manufacturer = jsonData['result']['manufacturer'];
+
       });
       vehicleInfo.colour = jsonData['result']['colour'];
       vehicleInfo.permanentAddress = jsonData['result']['permanent_address'];
@@ -251,6 +261,9 @@ class _CameraState extends State<Camera> {
       vehicleInfo.manufacturer = jsonData['result']['manufacturer'];
     }
     else {
+      Navigator.pop(context);
+      var snackBar = SnackBar(content: Text('No data found - Please check vehicle number'));
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
       print(response.reasonPhrase);
     }
 
@@ -291,14 +304,14 @@ class _CameraState extends State<Camera> {
             //   onPressed: () => getImage(ImageSource.gallery),
             //   child: const Text('Pick an Image'),
             // ),
-        const SizedBox(height: 20,),
+            const SizedBox(height: 20,),
             Padding(
               padding: const EdgeInsets.all(15.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text("Vehicle No: ",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w600),),
-                  Text("$scannedText"),
+                  Expanded(child: Text("$scannedText")),
                   IconButton(
                       onPressed: (){
                         final text = openDialog();
@@ -314,20 +327,19 @@ class _CameraState extends State<Camera> {
             const SizedBox(height: 20,),
             ElevatedButton(onPressed: vehicleDetails, child: Text("Check vehicle details"),style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.blue),)),
             const SizedBox(height: 20,),
-            Container(
+            isVisible? Container(
               margin: EdgeInsets.all(20),
               padding: EdgeInsets.all(4),
               width: 300,
-              height: 250,
               child: Visibility(
                 child: SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
-                  child: Column(
+                  child:  Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Row(
                         children: <Widget>[
-                          const Text('owner_name: ', style: TextStyle(fontSize: 16,fontWeight: FontWeight.w600,color: Colors.black),
+                          const Text('Owner Name: ', style: TextStyle(fontSize: 16,fontWeight: FontWeight.w600,color: Colors.black),
                               maxLines: 2),
                           Text(vehicleInfo.ownerName.toString(),style: TextStyle(fontSize: 16,fontWeight: FontWeight.w400,color: Colors.blue))
                         ],
@@ -340,7 +352,7 @@ class _CameraState extends State<Camera> {
                       ),
                       Row(
                         children: <Widget>[
-                          Text('manufacturer_model: ', style: TextStyle(fontSize: 16,fontWeight: FontWeight.w600,color: Colors.black),),
+                          Text('Model: ', style: TextStyle(fontSize: 16,fontWeight: FontWeight.w600,color: Colors.black),),
                           Text(vehicleInfo.manufacturerModel.toString(), style: TextStyle(fontSize: 16,fontWeight: FontWeight.w400,color: Colors.blue))
                         ],
                       ),
@@ -352,7 +364,7 @@ class _CameraState extends State<Camera> {
                       ),
                       Row(
                         children: <Widget>[
-                          Text('colour: ', style: TextStyle(fontSize: 16,fontWeight: FontWeight.w600,color: Colors.black),),
+                          Text('Colour: ', style: TextStyle(fontSize: 16,fontWeight: FontWeight.w600,color: Colors.black),),
                           Text(vehicleInfo.colour.toString(), style: TextStyle(fontSize: 16,fontWeight: FontWeight.w400,color: Colors.blue))
                         ],
                       )
@@ -361,47 +373,66 @@ class _CameraState extends State<Camera> {
                   ),
                 ),
               ),
-            ),
+            ):
+            Text("PLease enter the vehicle number") ,
             Container(
-              margin: EdgeInsets.all(9),
-              height: 120,
-              width: 250,
-              child: DropdownButtonFormField<String>(
-                decoration: InputDecoration(
-                  labelText: 'Select type of voilation',
-                ),
-                dropdownColor: Colors.white,
-              isExpanded: true,
-              value: selectedValue,
-              icon: Icon(Icons.arrow_downward),onChanged: (String?  newValue){
-              setState((){
-              selectedValue = newValue!;
-              print(newValue);
-               });
-              },
-              items :<String>[ 'Speeding','Triple riding','Drink and drive','Without seat belt' ]
-                  .map<DropdownMenuItem<String>>((String value){
-              return DropdownMenuItem<String>(
-              value : value,
-                  child : Text(value));
-              }).toList(),)),
+                margin: EdgeInsets.all(9),
+                height: 120,
+                width: 250,
+                child: DropdownButtonFormField<String>(
+                  decoration: InputDecoration(
+                    labelText: 'Select type of voilation',
+                  ),
+                  dropdownColor: Colors.white,
+                  isExpanded: true,
+                  value: selectedValue,
+                  icon: Icon(Icons.arrow_downward),onChanged: (String?  newValue){
+                  setState((){
+                    selectedValue = newValue!;
+                    print(newValue);
+                  });
+                },
+                  items :<String>[
+                    'Triple riding',
+                    'Speeding',
+                    'Drunk driving',
+                    'Jumping traffic signals',
+                    'Wrong-way driving',
+                    'Using mobile phones while driving',
+                    'Improper overtaking',
+                    'Driving without a valid license',
+                    'Overloading vehicles',
+                    'Not wearing seat belts or helmets',
+                    'Violation of lane discipline',
+                    'Littering / Throwing garbage out of vehicle',
+                    'Driving two-wheeler with more than two passengers',
+                    'Driving on footpath',
+                    'Driving in one-way',
+                    'Rash driving',
+                    'Driving a four-wheeler in the night with only one headlight',
+                    'Driving in the night with no brake lights',
+                    'Driving a two or three-wheeler in the night with no headlight',
+                    'Driving without a silencer',
+                    'Driving a vehicle emitting excessive pollution and smoke' ]
+                      .map<DropdownMenuItem<String>>((String value){
+                    return DropdownMenuItem<String>(
+                        value : value,
+                        child : Text(value));
+                  }).toList(),)),
 
             Container(
               margin: EdgeInsets.fromLTRB(0, 0, 0, 50),
               child: ElevatedButton(
-                  onPressed: () async {
-                    _determinePosition();
-                    // String uniqueName = DateTime.now().millisecondsSinceEpoch.toString();
-                    // await images.putFile(File(image!.path));
-                    // _image = await images.getDownloadURL();
-                    // info.vehicleNo = scannedText;
-                    // info.violation = _violation.text;
-                    // info.date = DateTime.now();
-                    String imageText = await imageToBase64(imageFile);
-                    print("Image Text: $imageText");
-                    _image = imageText;
-                    status = "Approval Pending";
-                    reward = "Processing";
+                onPressed: () async {
+                  _determinePosition();
+                  // String uniqueName = DateTime.now().millisecondsSinceEpoch.toString();
+                  // await images.putFile(File(image!.path));
+                  // _image = await images.getDownloadURL();
+                  // info.vehicleNo = scannedText;
+                  // info.violation = _violation.text;
+                  // info.date = DateTime.now();
+                  status = "Approval Pending";
+                  reward = "Processing";
 
                     Map<String, dynamic> dataToSend = {
                       // 'VehicleNo': info.vehicleNo,
@@ -416,13 +447,15 @@ class _CameraState extends State<Camera> {
                       'Longitude':_longitude
                     };
 
-                    // _reference.add(dataToSend);
-                    // Navigator.push(context,
-                    //     MaterialPageRoute(builder: (context) => Dashboard()));
-                  },
-                  child: InkWell(
-                    onTap:(){} ,  child: const Text('Upload'))),
-            ),
+                  // _reference.add(dataToSend);
+                  // Navigator.push(context,
+                  //     MaterialPageRoute(builder: (context) => Dashboard()));
+                },
+                child:OutlinedButton(
+                  onPressed: postData,
+                  child: Text('Upload'),
+                ) ,
+              ),
 
             //  Text("Number Plate: ${scannedText}",
             //   style: const TextStyle(
@@ -435,6 +468,67 @@ class _CameraState extends State<Camera> {
       ),
     );
 
+  }
+
+  String trimSpacesBetweenWords(String input) {
+    return input.replaceAll(RegExp(r'\s+'), '');
+  }
+
+  buildShowDialog(BuildContext context) {
+    return showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        });
+  }
+
+  Future<String?> postData() async {
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('user_uuid', userid);
+
+    buildShowDialog(context);
+    String trimmedText = trimSpacesBetweenWords(scannedText);
+    var request = https.Request('POST', Uri.parse('https://hostel.abhosting.co.in/smart_school_src/Public_trafic/addVehicle'));
+
+    request.body = json.encode({
+      "uuid": userid,
+      "VehicleNo": trimmedText,
+      // "color" : vehicleInfo.colour,
+      // "model" : vehicleInfo.manufacturerModel,
+      // "manufacturer" : vehicleInfo.manufacturer,
+      // "owner_name" : vehicleInfo.ownerName,
+      "Date" : DateTime.now().toIso8601String(),
+      "Violation" : selectedValue,
+      "Latitude" : _latitude,
+      "Longitude" : _longitude,
+      "Locality": currentAdress,
+      'Photos': _image,
+      "Address" : vehicleInfo.permanentAddress,
+      "PostalCode" : postalCode
+    });
+
+    //  request.headers.addAll(headers);
+    var streamedResponse = await request.send();
+    var response = await https.Response.fromStream(streamedResponse);
+
+    if (response.statusCode == 200) {
+      print(response.body);
+      Navigator.pop(context);
+      var snackBar = SnackBar(content: Text('Details successfully submitted'));
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      Navigator.push(context, MaterialPageRoute(builder: (context)=>Dashboard()));
+
+    }
+    else {
+      Navigator.pop(context);
+      var snackBar = SnackBar(content: Text('Failed to upload'));
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      print(response.reasonPhrase);
+    }
   }
 
 
