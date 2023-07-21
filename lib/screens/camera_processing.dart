@@ -221,8 +221,6 @@ class _CameraState extends State<Camera> {
   }
   Future<String?> vehicleDetails() async {
 
-
-
     var headers = {
       'X-RapidAPI-Key': '4a89392d99msh2de7c2b89478908p1049e4jsna29ec6820645',
       'X-RapidAPI-Host': 'vehicle-rc-information.p.rapidapi.com/',
