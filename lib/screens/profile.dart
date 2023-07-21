@@ -28,42 +28,118 @@ class Profiles extends StatelessWidget {
                 ),
               ),
             ),
+            const Divider(
+              thickness: 1,
+              color: Colors.black,
+            ),
             const SizedBox(height: 30),
-            const Divider(),
-            const ProfilePage(
-              icon: Icons.person,
-              title: 'Name',
-              trailing: 'John Steve',
 
+             Padding(
+               padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
+               child: Row(
+                 children: <Widget>[
+                   Icon(Icons.person),
+                   const SizedBox(width: 30,),
+                   Text("Govind Kumar")
+                 ],
+               ),
+             ),
+            const Divider(
+              indent: 50,
+              endIndent: 30,
             ),
-            const Divider(),
-            const ProfilePage(
-              icon: Icons.mail_rounded,
-              title: 'Email',
-              trailing: 'johnsteve@mail.com',
-            ),
-            const Divider(),
-            const ProfilePage(
-              icon: Icons.phone_android,
-              title: 'Phone',
-              trailing: '+919876543210',
+            const SizedBox(height: 30),
 
-            ),
-            const Divider(),
-            InkWell(
-              onTap:(){
-            Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => MyRewards()),
-            );
-            },
-              child: const ProfilePage(
-                icon: Icons.currency_exchange,
-                title: 'Rewards',
-                trailing: '',
-                icons: Icons.arrow_forward_ios_outlined,
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
+              child: Row(
+                children: <Widget>[
+                  Icon(Icons.email),
+                  const SizedBox(width: 30,),
+                  Text("govindkumar@gmail.com")
+                ],
               ),
             ),
+            const Divider(
+              indent: 50,
+              endIndent: 30,
+            ),
+            const SizedBox(height: 30),
+
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
+              child: Row(
+                children: <Widget>[
+                  Icon(Icons.phone),
+                  const SizedBox(width: 30,),
+                  Text("+91 876767374")
+                ],
+              ),
+            ),
+            const Divider(
+              indent: 50,
+              endIndent: 30,
+            ),
+            const SizedBox(height: 30),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
+              child: Row(
+                children: <Widget>[
+                  Icon(Icons.currency_rupee),
+                  const SizedBox(width: 30),
+                  Text("Rewards"),
+                  const SizedBox(width: 150),
+                  InkWell(
+                    onTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=> MyRewards()));
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Icon(Icons.arrow_forward_ios_outlined),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const Divider(
+              indent: 50,
+              endIndent: 30,
+            ),
+
+            // const ProfilePage(
+            //   icon: Icons.person,
+            //   title: 'Name',
+            //   trailing: 'John Steve',
+            //
+            // ),
+  //          const Divider(),
+            // const ProfilePage(
+            //   icon: Icons.mail_rounded,
+            //   title: 'Email',
+            //   trailing: 'johnsteve@mail.com',
+            // ),
+     //       const Divider(),
+            // const ProfilePage(
+            //   icon: Icons.phone_android,
+            //   title: 'Phone',
+            //   trailing: '+919876543210',
+            //
+            // ),
+     //       const Divider(),
+     //        InkWell(
+     //          onTap:(){
+     //        Navigator.push(
+     //        context,
+     //        MaterialPageRoute(builder: (context) => MyRewards()),
+     //        );
+     //        },
+     //          child: const ProfilePage(
+     //            icon: Icons.currency_exchange,
+     //            title: 'Rewards',
+     //            trailing: '',
+     //            icons: Icons.arrow_forward_ios_outlined,
+     //          ),
+     //        ),
           ],
         ),
       ),
@@ -72,7 +148,6 @@ class Profiles extends StatelessWidget {
 }
 
 class ProfilePage extends StatelessWidget {
-
 
   const ProfilePage({
     super.key,

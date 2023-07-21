@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
+import 'package:login_application/FirebaseServices/firebase.dart';
+import 'package:login_application/bottom_navigation.dart';
 import 'main.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 class RegisterUser extends StatelessWidget {
@@ -161,23 +163,39 @@ class RegisterUser extends StatelessWidget {
 
   Future createUser({required BuildContext context ,required String first_name, required String last_name, required String emailmobile, required String pswd}) async
   {
-    final doc_user = FirebaseFirestore.instance.collection('user').doc();
+    try{
+      final doc_user = FirebaseFirestore.instance.collection('user').doc();
+      // final json={
+      //   'name' : first_name,
+      //   'last_name' : last_name,
+      //   'email/mobile' : emailmobile,
+      //   'password' : pswd
+      // };
 
-    final json={
-      'name' : first_name,
-      'last_name' : last_name,
-      'email/mobile' : emailmobile,
-      'password' : pswd
-    };
-
-    await doc_user.set(json);
-    Navigator.pop(context);
-    var snackBar = SnackBar(content: Text('User Registered Successfully'));
-    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-
-    UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: emailmobile, password: pswd);
-
-    //  await FirebaseAuth.instance.signInWithEmailAndPassword(email: emailmobile, password: pswd);
+      //await FirestoreServices.saveUser(first_name,last_name,emailmobile,pswd);
+      // await FirebaseFirestore.instance
+      //     .collection('user')
+      //     .doc('id')
+      //     .set({
+      //   'name' : first_name,
+      //   'last_name' : last_name,
+      //   'email/mobile' : emailmobile,
+      //   'password' : pswd
+      // });
+      //  await doc_user.set(json);
+      UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: emailmobile, password: pswd);
+      String userid = userCredential.user!.uid;
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setString('user_uuid', userid);
+      Navigator.pop(context);
+      var snackBar = SnackBar(content: Text('User Registered Successfully'));
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      Navigator.push(context, MaterialPageRoute(builder: (context)=> Login()));
+    } catch(e){
+      Navigator.pop(context);
+      var snackBar = SnackBar(content: Text('Some error occured'));
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    }
   }
 
   buildShowDialog(BuildContext context) {
