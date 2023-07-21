@@ -22,10 +22,7 @@ class Dashboard extends StatelessWidget {
 
     if (response.statusCode == 200) {
       infoList = jsonDecode(response.body);
-      print(infoList['data']);
-      print(infoList['data'][0]['image']);
-      print(infoList.values.last);
-      print(infoList["data"].length);
+
       return infoList;
     } else {
       throw Exception("Failed to load");
@@ -48,10 +45,24 @@ class Dashboard extends StatelessWidget {
               );
             }
     if (snapshot.hasData) {
+      List documents = infoList['data'];
+      List<Map> info = documents.map((e) =>
+      {
+        'id': e['id'],
+        'VehicleNo':e['vehicleNo'],
+        'Violation':e['violation'],
+        'Photos':e['image'],
+        'Reward': e['reward_amount'],
+        'Locality': e['locality'],
+        'PostalCode': e['postalCode'],
+        'Latitude':e['latitude'],
+        'Longitude':e['longitude']
+      }
+      ).toList();
       return ListView.builder(
-          itemCount: infoList['data'].length,
+          itemCount: info.length,
           itemBuilder: (context,index){
-            print(index);
+            Map thisItem = info[index];
             return Container(
               child: Column(
                 children: [
@@ -62,16 +73,17 @@ class Dashboard extends StatelessWidget {
                         leading: CircleAvatar(
                           backgroundColor: Colors.amber,
                           backgroundImage:
-                          NetworkImage('${infoList['data'][index]['image']}'),
+                          NetworkImage('${thisItem['Photos']}'),
                         ),
-                        title: Text('${infoList['data'][index]['vehicleNo']}'),
-                        subtitle: Text('${infoList['data'][index]['violation']}') ,
-                        trailing: Text('${infoList['data'][index]['reward_amount']}'),
-    onTap: () {
-    Navigator.of(context).push(MaterialPageRoute(
-    builder: (context) =>
-    ItemDetail(0)));
-    },
+                          title: Text('${thisItem['VehicleNo']}'),
+                          subtitle: Text('${thisItem['Violation']}'),
+                          trailing: Text('${thisItem['Reward']}'),
+
+                          onTap: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) =>
+                                    ItemDetail(thisItem['id'])));
+                          },
                       ),
                                           ),
                   )
