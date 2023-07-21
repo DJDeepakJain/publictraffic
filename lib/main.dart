@@ -8,7 +8,7 @@ import 'package:login_application/register_user.dart';
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 
@@ -42,21 +42,19 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
-    final _formKey = GlobalKey<FormState>();
+    final formKey = GlobalKey<FormState>();
     var nameController = TextEditingController();
     var pswdController = TextEditingController();
-    String username = '';
-    String pswd = '';
 
     return Scaffold(
         appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-    title: Text('Login'),
+    title: const Text('Login'),
     ),
     body: Form(
-    key: _formKey,
+    key: formKey,
     child: Center(
-    child: Container(
+    child: SizedBox(
     width: 300,
     child: Center(
     child: Column(
@@ -81,7 +79,6 @@ class _LoginState extends State<Login> {
     }
     },
     onSaved: (value) {
-    username = value!;
     },
     ),const SizedBox(height: 11),
     TextFormField(
@@ -104,21 +101,20 @@ class _LoginState extends State<Login> {
                       }
                     },
                     onSaved: (value) {
-                      pswd = value!;
                     },
                     obscureText: true,
                     obscuringCharacter: '*',
                   ),const SizedBox(height: 11),
                   ElevatedButton(onPressed: () async {
-                    if(_formKey.currentState!.validate()){
-                      _formKey.currentState!.save();
+                    if(formKey.currentState!.validate()){
+                      formKey.currentState!.save();
 
                       buildShowDialog(context);
-                      final email_mobile = nameController.text.toString();
+                      final emailMobile = nameController.text.toString();
                       final password = pswdController.text.toString();
 
                       signInUser(context: context,
-                          email_mobile: email_mobile,
+                          emailMobile: emailMobile,
                           password: password);
                     }
 
@@ -146,20 +142,20 @@ class _LoginState extends State<Login> {
       ),);
   }
 
-  Future<void> signInUser({required BuildContext context, required String email_mobile, required String password}) async {
+  Future<void> signInUser({required BuildContext context, required String emailMobile, required String password}) async {
 
     try {
       await FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: email_mobile, password: password);
+          .signInWithEmailAndPassword(email: emailMobile, password: password);
       Navigator.pop(context);
-      var snackBar = SnackBar(content: Text('Signed in Successfully'));
+      var snackBar = const SnackBar(content: Text('Signed in Successfully'));
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
 
-      Navigator.push(context, MaterialPageRoute(builder: (context) => BottomNavigation()));
-    } on FirebaseAuthException catch (e) {
+      Navigator.push(context, MaterialPageRoute(builder: (context) => const BottomNavigation()));
+    } on FirebaseAuthException {
       Navigator.pop(context);
         ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('No user Found with this Email')));
+            const SnackBar(content: Text('No user Found with this Email')));
           }
 
 }
@@ -169,7 +165,7 @@ class _LoginState extends State<Login> {
         context: context,
         barrierDismissible: false,
         builder: (BuildContext context) {
-          return Center(
+          return const Center(
             child: CircularProgressIndicator(),
           );
         });

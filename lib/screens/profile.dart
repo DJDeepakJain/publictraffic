@@ -34,12 +34,12 @@ class Profiles extends StatelessWidget {
             ),
             const SizedBox(height: 30),
 
-             Padding(
-               padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
+             const Padding(
+               padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
                child: Row(
                  children: <Widget>[
                    Icon(Icons.person),
-                   const SizedBox(width: 30,),
+                   SizedBox(width: 30,),
                    Text("Govind Kumar")
                  ],
                ),
@@ -50,12 +50,12 @@ class Profiles extends StatelessWidget {
             ),
             const SizedBox(height: 30),
 
-            Padding(
-              padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
+            const Padding(
+              padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
               child: Row(
                 children: <Widget>[
                   Icon(Icons.email),
-                  const SizedBox(width: 30,),
+                  SizedBox(width: 30,),
                   Text("govindkumar@gmail.com")
                 ],
               ),
@@ -66,12 +66,12 @@ class Profiles extends StatelessWidget {
             ),
             const SizedBox(height: 30),
 
-            Padding(
-              padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
+            const Padding(
+              padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
               child: Row(
                 children: <Widget>[
                   Icon(Icons.phone),
-                  const SizedBox(width: 30,),
+                  SizedBox(width: 30,),
                   Text("+91 876767374")
                 ],
               ),
@@ -85,16 +85,16 @@ class Profiles extends StatelessWidget {
               padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
               child: Row(
                 children: <Widget>[
-                  Icon(Icons.currency_rupee),
+                  const Icon(Icons.currency_rupee),
                   const SizedBox(width: 30),
-                  Text("Rewards"),
+                  const Text("Rewards"),
                   const SizedBox(width: 150),
                   InkWell(
                     onTap: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=> MyRewards()));
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=> const MyRewards()));
                     },
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
+                    child: const Padding(
+                      padding: EdgeInsets.all(8.0),
                       child: Icon(Icons.arrow_forward_ios_outlined),
                     ),
                   ),

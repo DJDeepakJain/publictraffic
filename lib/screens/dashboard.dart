@@ -3,15 +3,12 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:image/image.dart';
-import '../model/data.dart';
 import 'item_detail.dart';
 
 
 
 class Dashboard extends StatelessWidget {
-  Dashboard({super.key}) {
-  }
+  Dashboard({super.key});
 
   Map<String, dynamic> infoList = {};
 
@@ -63,32 +60,30 @@ class Dashboard extends StatelessWidget {
           itemCount: info.length,
           itemBuilder: (context,index){
             Map thisItem = info[index];
-            return Container(
-              child: Column(
-                children: [
-                  Card(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: ListTile(
-                        leading: CircleAvatar(
-                          backgroundColor: Colors.amber,
-                          backgroundImage:
-                          NetworkImage('${thisItem['Photos']}'),
-                        ),
-                          title: Text('${thisItem['VehicleNo']}'),
-                          subtitle: Text('${thisItem['Violation']}'),
-                          trailing: Text('${thisItem['Reward']}'),
-
-                          onTap: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) =>
-                                    ItemDetail(thisItem['id'])));
-                          },
+            return Column(
+              children: [
+                Card(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ListTile(
+                      leading: CircleAvatar(
+                        backgroundColor: Colors.amber,
+                        backgroundImage:
+                        NetworkImage('${thisItem['Photos']}'),
                       ),
-                                          ),
-                  )
-                ],
-              ),
+                        title: Text('${thisItem['VehicleNo']}'),
+                        subtitle: Text('${thisItem['Violation']}'),
+                        trailing: Text('${thisItem['Reward']}'),
+
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) =>
+                                  ItemDetail(thisItem['id'])));
+                        },
+                    ),
+                                        ),
+                )
+              ],
             );
           }
       );

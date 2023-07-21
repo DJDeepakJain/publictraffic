@@ -20,10 +20,10 @@ class _MyRewardsState extends State<MyRewards> {
         borderRadius: BorderRadius.circular(10.0),
       ),
       child: Container(
-        margin: EdgeInsets.all(5),
-        padding: EdgeInsets.all(4),
+        margin: const EdgeInsets.all(5),
+        padding: const EdgeInsets.all(4),
         height: 150,
-        child: Column(
+        child: const Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Row(

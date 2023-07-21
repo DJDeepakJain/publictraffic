@@ -1,8 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as https;
-//import 'package:cloud_firestore/cloud_firestore.dart';
-//import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geocoding/geocoding.dart';
@@ -48,14 +46,19 @@ class _CameraState extends State<Camera> {
   String permanent_address = '';
   String owner_name = '';
   String manufacturer_model = '';
+  String permanentAddress = '';
+  String ownerName = '';
+  String manufacturerModel = '';
   String manufacturer = '';
 
   final TextEditingController _vehicleNo = TextEditingController();
+  final TextEditingController _violation = TextEditingController();
+  TextEditingController ownername = TextEditingController();
   // final TextEditingController _violation = TextEditingController();
   TextEditingController owner_Name = TextEditingController();
   TextEditingController adress = TextEditingController();
-  TextEditingController manu_model = TextEditingController();
-  TextEditingController bike_color = TextEditingController();
+  TextEditingController manuModel = TextEditingController();
+  TextEditingController bikeColor = TextEditingController();
 
   // final CollectionReference _reference =
   // FirebaseFirestore.instance.collection('photos');
@@ -67,7 +70,7 @@ class _CameraState extends State<Camera> {
   void initState() {
     // TODO: implement initState
     getImage(ImageSource.camera);
-    //  info = Info(vehicleNo: "", date: DateTime.now(), violation: "Triple riding", photos: "");
+  //  info = Info(vehicleNo: "", date: DateTime.now(), violation: "Triple riding", photos: "");
     vehicleInfo = Result(ownerName: "",colour: "",permanentAddress: "",manufacturerModel: "",manufacturer: "");
     super.initState();
   }
@@ -147,6 +150,11 @@ class _CameraState extends State<Camera> {
     return binaryImage;
   }
 
+  Future<String> imageToBase64(File imageFile) async {
+    List<int> imageBytes = await imageFile.readAsBytes();
+    String base64Image = base64Encode(imageBytes);
+    return base64Image;
+  }
 
   Future<Position> _determinePosition() async{
     bool serviceEnabled;
@@ -241,7 +249,6 @@ class _CameraState extends State<Camera> {
       isVisible = true;
       final  body1 = (await response.stream.bytesToString()) ;
       dynamic jsonData = jsonDecode(body1);
-
       print(scannedText);
       request.headers.addAll(headers);
       setState(() {
@@ -427,18 +434,18 @@ class _CameraState extends State<Camera> {
                   status = "Approval Pending";
                   reward = "Processing";
 
-                  Map<String, dynamic> dataToSend = {
-                    // 'VehicleNo': info.vehicleNo,
-                    // 'Violation': info.violation,
-                    // 'Date': info.date,
-                    'Photos': _image,
-                    'Status': status,
-                    'Reward': reward,
-                    'Locality': currentAdress,
-                    'PostalCode':postalCode,
-                    'Latitude':_latitude,
-                    'Longitude':_longitude
-                  };
+                    Map<String, dynamic> dataToSend = {
+                      // 'VehicleNo': info.vehicleNo,
+                      // 'Violation': info.violation,
+                      // 'Date': info.date,
+                      'Photos': _image,
+                      'Status': status,
+                      'Reward': reward,
+                      'Locality': currentAdress,
+                      'PostalCode':postalCode,
+                      'Latitude':_latitude,
+                      'Longitude':_longitude
+                    };
 
                   // _reference.add(dataToSend);
                   // Navigator.push(context,
@@ -450,13 +457,13 @@ class _CameraState extends State<Camera> {
                 ) ,
               ),
 
-              //  Text("Number Plate: ${scannedText}",
-              //   style: const TextStyle(
-              //     fontSize: 16,
-              //     fontWeight: FontWeight.bold,
-              //   ),
-              // ),
-            )],
+            //  Text("Number Plate: ${scannedText}",
+            //   style: const TextStyle(
+            //     fontSize: 16,
+            //     fontWeight: FontWeight.bold,
+            //   ),
+            // ),
+          ],
         ),
       ),
     );
