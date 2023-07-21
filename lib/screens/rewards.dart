@@ -20,17 +20,20 @@ class _MyRewardsState extends State<MyRewards> {
         borderRadius: BorderRadius.circular(10.0),
       ),
       child: Container(
-        margin: EdgeInsets.all(20),
+        margin: EdgeInsets.all(5),
         padding: EdgeInsets.all(4),
-        width: 300,
-        height: 100,
+        height: 150,
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Row(
               children: <Widget>[
                 Text('Type of Voilation -', style: TextStyle(fontSize: 16,fontWeight: FontWeight.w600,color: Colors.black),
                 maxLines: 2),
-                Text('Without helmet riding', style: TextStyle(fontSize: 16,fontWeight: FontWeight.w400,color: Colors.blue))
+                Expanded(
+                  child: Text('Without helmet riding with bike',overflow: TextOverflow.ellipsis,maxLines: 2,
+                      style: TextStyle(fontSize: 16,fontWeight: FontWeight.w400,color: Colors.blue)),
+                )
               ],
             ),
             Row(
