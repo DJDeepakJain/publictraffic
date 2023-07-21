@@ -6,9 +6,7 @@ import 'package:http/http.dart' as http;
 // ignore: must_be_immutable
 class ItemDetail extends StatelessWidget {
   final String ind;
-  ItemDetail(this.ind, {super.key}) {
-
-  }
+  ItemDetail(this.ind, {super.key});
 
   Map<String, dynamic> infoList = {};
   Future fetchData() async {
@@ -81,12 +79,12 @@ class ItemDetail extends StatelessWidget {
           const SizedBox(
             height: 50,
           ),
-          Row(
+          const Row(
             children: [
               Icon(Icons.electric_bike_outlined),
               Text(
                 " Vehicle Info ",
-                style: const TextStyle(
+                style: TextStyle(
                     fontSize: 20, fontWeight: FontWeight.w600),
               ),
               Icon(Icons.car_crash_outlined)
@@ -95,8 +93,8 @@ class ItemDetail extends StatelessWidget {
 
           Row(
             children: [
-              Text(" Vehicle No. ",
-                style: const TextStyle(
+              const Text(" Vehicle No. ",
+                style: TextStyle(
                     fontSize: 20, fontWeight: FontWeight.w600),),
               Text('${thisItem['VehicleNo']}',
                 style: const TextStyle(
@@ -106,9 +104,9 @@ class ItemDetail extends StatelessWidget {
 
           Row(
             children: [
-              Text(
+              const Text(
                 "Violation: ",
-                style: const TextStyle(
+                style: TextStyle(
                     fontSize: 20, fontWeight: FontWeight.w600),
               ),
               Text(
@@ -118,7 +116,7 @@ class ItemDetail extends StatelessWidget {
               ),
             ],
           ),
-          Divider(
+          const Divider(
             thickness: 1,
             indent: 10,
             color: Colors.grey,
@@ -128,8 +126,8 @@ class ItemDetail extends StatelessWidget {
             height: 20,
           ),
 
-          Text('Current Status : ',
-            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w600),),
+          const Text('Current Status : ',
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),),
 
           const SizedBox(
             height: 10,
@@ -137,28 +135,35 @@ class ItemDetail extends StatelessWidget {
 
           Row(
             children: [
-              Text(
+              const Text(
                 'Status: ',
-                style: const TextStyle(
+                style: TextStyle(
                     fontSize: 20, fontWeight: FontWeight.w600),
               ),
-              Text(
-                '${thisItem['Status']}',
-                style: const TextStyle(
+              thisItem['Status'] != 0 && thisItem['Status'] != null?
+              const Text(
+                'Accepted',
+                style: TextStyle(
                     fontSize: 16, fontWeight: FontWeight.w300),
-              ),
-            ],
+              ):
+      const Text(
+      'Processing',
+      style: TextStyle(
+      fontSize: 16, fontWeight: FontWeight.w300),
+      )
+      ],
           ),
-          Divider(
+          const Divider(
             thickness: 1,
             indent: 10,
             color: Colors.grey,
           ),
+          thisItem['Status'] != 0 && thisItem['Status'] != null?
           Row(
             children: [
-              Text(
+              const Text(
                 'Reward: ',
-                style: const TextStyle(
+                style: TextStyle(
                     fontSize: 20, fontWeight: FontWeight.w600),
               ),
               Text(
@@ -167,14 +172,15 @@ class ItemDetail extends StatelessWidget {
                     fontSize: 16, fontWeight: FontWeight.w300),
               ),
             ],
-          ),
-          Divider(
+          ):Container(),
+          thisItem['Status'] != 0 && thisItem['Status'] != null?
+          const Divider(
             thickness: 1,
             indent: 10,
             color: Colors.grey,
-          ),
+          ):Container(),
           const SizedBox(height: 20,),
-          Row(
+          const Row(
             children: [
               Icon(Icons.location_on_outlined),
               Text("Location", style: TextStyle(
@@ -183,7 +189,7 @@ class ItemDetail extends StatelessWidget {
           ),
           Row(
             children: [
-              Text(
+              const Text(
                 'Address: ', style: TextStyle(
                   fontSize: 16, fontWeight: FontWeight.w300),
               ),
@@ -196,16 +202,16 @@ class ItemDetail extends StatelessWidget {
               ),
             ],
           ),
-          Divider(
+          const Divider(
             thickness: 1,
             indent: 10,
             color: Colors.grey,
           ),
           Row(
             children: [
-              Text(
+              const Text(
                 'Latitude: ',
-                style: const TextStyle(
+                style: TextStyle(
                     fontSize: 16, fontWeight: FontWeight.w300),
               ),
               Text(
@@ -214,16 +220,16 @@ class ItemDetail extends StatelessWidget {
               ),
             ],
           ),
-          Divider(
+          const Divider(
             thickness: 1,
             indent: 10,
             color: Colors.grey,
           ),
           Row(
             children: [
-              Text(
+              const Text(
                 'Longitude: ',
-                style: const TextStyle(
+                style: TextStyle(
                     fontSize: 16, fontWeight: FontWeight.w300),
               ),
               Text(
@@ -232,12 +238,12 @@ class ItemDetail extends StatelessWidget {
               ),
             ],
           ),
-          Divider(
+          const Divider(
             thickness: 1,
             indent: 10,
             color: Colors.grey,
           ),
-          SizedBox(height: 20,)
+          const SizedBox(height: 20,)
         ],
       ));
     }

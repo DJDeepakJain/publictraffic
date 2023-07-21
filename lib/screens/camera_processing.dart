@@ -1,8 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as https;
-//import 'package:cloud_firestore/cloud_firestore.dart';
-//import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geocoding/geocoding.dart';
@@ -10,11 +8,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_ml_kit/google_ml_kit.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:image/image.dart' as img;
-
-
-import '../model/data.dart';
 import '../model/Result.dart';
-import 'dashboard.dart';
 
 class Camera extends StatefulWidget {
   final XFile? image;
@@ -42,17 +36,17 @@ class _CameraState extends State<Camera> {
   late Position currentPosition;
   String vehicleNo = '';
   String colour = '';
-  String permanent_address = '';
-  String owner_name = '';
-  String manufacturer_model = '';
+  String permanentAddress = '';
+  String ownerName = '';
+  String manufacturerModel = '';
   String manufacturer = '';
 
   final TextEditingController _vehicleNo = TextEditingController();
   final TextEditingController _violation = TextEditingController();
-  TextEditingController owner_Name = TextEditingController();
+  TextEditingController ownername = TextEditingController();
   TextEditingController adress = TextEditingController();
-  TextEditingController manu_model = TextEditingController();
-  TextEditingController bike_color = TextEditingController();
+  TextEditingController manuModel = TextEditingController();
+  TextEditingController bikeColor = TextEditingController();
 
   // final CollectionReference _reference =
   // FirebaseFirestore.instance.collection('photos');
