@@ -14,7 +14,7 @@ class Dashboard extends StatelessWidget {
 
   Future fetchData() async {
     final uri = Uri.parse(
-        "https://hostel.abhosting.co.in/smart_school_src/Public_trafic/getVehicle");
+        "https://rto.sumerudigital.com/rto/Public_trafic/getVehicle");
     final response = await http.post(uri);
 
     if (response.statusCode == 200) {

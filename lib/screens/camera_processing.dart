@@ -470,7 +470,7 @@ class _CameraState extends State<Camera> {
 
     buildShowDialog(context);
     String trimmedText = trimSpacesBetweenWords(scannedText);
-    var request = https.Request('POST', Uri.parse('https://hostel.abhosting.co.in/smart_school_src/Public_trafic/addVehicle'));
+    var request = https.Request('POST', Uri.parse('https://rto.sumerudigital.com/rto/Public_trafic/addVehicle'));
 
     request.body = json.encode({
       "uuid": userid,
