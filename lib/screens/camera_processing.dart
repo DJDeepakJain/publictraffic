@@ -217,7 +217,7 @@ class _CameraState extends State<Camera> {
   Future<String?> vehicleDetails() async {
     buildShowDialog(context);
     var headers = {
-      'X-RapidAPI-Key': 'f3a86a804amsh504cdacdd719efcp1f9567jsn62f85613f6d8',
+      'X-RapidAPI-Key': '9eea3a1274mshbbd50d54588c40cp1e0b65jsn25933c34f85e',
       'X-RapidAPI-Host': 'vehicle-rc-information.p.rapidapi.com/',
       'Content-Type': 'application/json'
     };
@@ -251,7 +251,7 @@ class _CameraState extends State<Camera> {
     }
     else {
       Navigator.pop(context);
-      var snackBar = SnackBar(content: Text('No data found - Please check vehicle number'));
+      var snackBar = const SnackBar(content: Text('No data found - Please check vehicle number'));
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
       print(response.reasonPhrase);
     }
@@ -279,15 +279,24 @@ class _CameraState extends State<Camera> {
                 ),
               ),
             if(image != null)
-              Container(
-                padding: EdgeInsets.all(20.0),
-                height: 350,
-                width: 350,
-                child: Center
-                  (child: SizedBox(
-                    child: Image.file(File(image!.path))
-                )
+              Stack(
+                alignment: Alignment.bottomRight,
+                children: [
+                  IconButton(onPressed: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>const Camera()));
+                  }, icon: const Icon(Icons.refresh_outlined)),
+                  Container(
+                  padding: const EdgeInsets.all(20.0),
+                  height: 350,
+                  width: 350,
+                  child: Center
+                    (child: SizedBox(
+                      child: Image.file(File(image!.path))
+                  )
+                  ),
                 ),
+
+                ]
               ),
             // ElevatedButton(
             //   onPressed: () => getImage(ImageSource.gallery),
@@ -299,7 +308,7 @@ class _CameraState extends State<Camera> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("Vehicle No: ",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w600),),
+                  const Text("Vehicle No: ",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w600),),
                   Expanded(child: Text("$scannedText")),
                   IconButton(
                       onPressed: (){
@@ -314,11 +323,11 @@ class _CameraState extends State<Camera> {
               ),
             ),
             const SizedBox(height: 20,),
-            ElevatedButton(onPressed: vehicleDetails, child: Text("Check vehicle details"),style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.blue),)),
+            ElevatedButton(onPressed: vehicleDetails, child: const Text("Check vehicle details"),style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.blue),)),
             const SizedBox(height: 20,),
             isVisible? Container(
-              margin: EdgeInsets.all(20),
-              padding: EdgeInsets.all(4),
+              margin: const EdgeInsets.all(20),
+              padding: const EdgeInsets.all(4),
               width: 300,
               child: Visibility(
                 child: SingleChildScrollView(
@@ -330,31 +339,31 @@ class _CameraState extends State<Camera> {
                         children: <Widget>[
                           const Text('Owner Name: ', style: TextStyle(fontSize: 16,fontWeight: FontWeight.w600,color: Colors.black),
                               maxLines: 2),
-                          Text(vehicleInfo.ownerName.toString(),style: TextStyle(fontSize: 16,fontWeight: FontWeight.w400,color: Colors.blue))
+                          Text(vehicleInfo.ownerName.toString(),style: const TextStyle(fontSize: 16,fontWeight: FontWeight.w400,color: Colors.blue))
                         ],
                       ),
                       Row(
                         children: <Widget>[
-                          Text('Address: ', style: TextStyle(fontSize: 16,fontWeight: FontWeight.w600,color: Colors.black),),
-                          Text(vehicleInfo.permanentAddress.toString(), style: TextStyle(fontSize: 16,fontWeight: FontWeight.w400,color: Colors.blue))
+                          const Text('Address: ', style: TextStyle(fontSize: 16,fontWeight: FontWeight.w600,color: Colors.black),),
+                          Text(vehicleInfo.permanentAddress.toString(), style: const TextStyle(fontSize: 16,fontWeight: FontWeight.w400,color: Colors.blue))
                         ],
                       ),
                       Row(
                         children: <Widget>[
-                          Text('Model: ', style: TextStyle(fontSize: 16,fontWeight: FontWeight.w600,color: Colors.black),),
-                          Text(vehicleInfo.manufacturerModel.toString(), style: TextStyle(fontSize: 16,fontWeight: FontWeight.w400,color: Colors.blue))
+                          const Text('Model: ', style: TextStyle(fontSize: 16,fontWeight: FontWeight.w600,color: Colors.black),),
+                          Text(vehicleInfo.manufacturerModel.toString(), style: const TextStyle(fontSize: 16,fontWeight: FontWeight.w400,color: Colors.blue))
                         ],
                       ),
                       Row(
                         children: <Widget>[
-                          Text('Manufacturer: ', style: TextStyle(fontSize: 16,fontWeight: FontWeight.w600,color: Colors.black),),
-                          Text(vehicleInfo.manufacturer.toString(), style: TextStyle(fontSize: 16,fontWeight: FontWeight.w400,color: Colors.blue))
+                          const Text('Manufacturer: ', style: TextStyle(fontSize: 16,fontWeight: FontWeight.w600,color: Colors.black),),
+                          Text(vehicleInfo.manufacturer.toString(), style: const TextStyle(fontSize: 16,fontWeight: FontWeight.w400,color: Colors.blue))
                         ],
                       ),
                       Row(
                         children: <Widget>[
-                          Text('Colour: ', style: TextStyle(fontSize: 16,fontWeight: FontWeight.w600,color: Colors.black),),
-                          Text(vehicleInfo.colour.toString(), style: TextStyle(fontSize: 16,fontWeight: FontWeight.w400,color: Colors.blue))
+                          const Text('Colour: ', style: TextStyle(fontSize: 16,fontWeight: FontWeight.w600,color: Colors.black),),
+                          Text(vehicleInfo.colour.toString(), style: const TextStyle(fontSize: 16,fontWeight: FontWeight.w400,color: Colors.blue))
                         ],
                       )
 
@@ -363,19 +372,19 @@ class _CameraState extends State<Camera> {
                 ),
               ),
             ):
-            Text("PLease enter the vehicle number") ,
+            const Text("PLease enter the vehicle number") ,
             Container(
-                margin: EdgeInsets.all(9),
+                margin: const EdgeInsets.all(9),
                 height: 120,
                 width: 250,
                 child: DropdownButtonFormField<String>(
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: 'Select type of voilation',
                   ),
                   dropdownColor: Colors.white,
                   isExpanded: true,
                   value: selectedValue,
-                  icon: Icon(Icons.arrow_downward),onChanged: (String?  newValue){
+                  icon: const Icon(Icons.arrow_downward),onChanged: (String?  newValue){
                   setState((){
                     selectedValue = newValue!;
                     print(newValue);
@@ -410,7 +419,7 @@ class _CameraState extends State<Camera> {
                   }).toList(),)),
 
             Container(
-              margin: EdgeInsets.fromLTRB(0, 0, 0, 50),
+              margin: const EdgeInsets.fromLTRB(0, 0, 0, 50),
               child: ElevatedButton(
                 onPressed: () async {
                   _determinePosition();
@@ -422,7 +431,7 @@ class _CameraState extends State<Camera> {
                 },
                 child:OutlinedButton(
                   onPressed: postData,
-                  child: Text('Upload'),
+                  child: const Text('Upload'),
                 ) ,
               ),
 
@@ -487,14 +496,14 @@ class _CameraState extends State<Camera> {
     if (response.statusCode == 200) {
       print(response.body);
       Navigator.pop(context);
-      var snackBar = SnackBar(content: Text('Details successfully submitted'));
+      var snackBar = const SnackBar(content: Text('Details successfully submitted'));
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
       Navigator.push(context, MaterialPageRoute(builder: (context)=>Dashboard()));
 
     }
     else {
       Navigator.pop(context);
-      var snackBar = SnackBar(content: Text('Failed to upload'));
+      var snackBar = const SnackBar(content: Text('Failed to upload'));
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
       print(response.reasonPhrase);
     }

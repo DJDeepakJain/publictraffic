@@ -148,7 +148,7 @@ class ItemDetail extends StatelessWidget {
                 style: TextStyle(
                     fontSize: 20, fontWeight: FontWeight.w600),
               ),
-              thisItem['Status'] != 0 && thisItem['Status'] != null?
+              thisItem['Status'] != 0?
               const Text(
                 'Accepted',
                 style: TextStyle(
