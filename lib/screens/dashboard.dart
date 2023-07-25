@@ -3,6 +3,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:login_application/model/constants.dart';
 import 'item_detail.dart';
 
 
@@ -14,7 +15,7 @@ class Dashboard extends StatelessWidget {
 
   Future fetchData() async {
     final uri = Uri.parse(
-        "https://rto.sumerudigital.com/rto/Public_trafic/getVehicle");
+        "${publicTrafficAPI}getVehicle");
     final response = await http.post(uri);
 
     if (response.statusCode == 200) {
