@@ -9,6 +9,7 @@ import 'package:google_ml_kit/google_ml_kit.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:image/image.dart' as img;
 import 'package:login_application/model/Result.dart';
+import 'package:login_application/model/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dashboard.dart';
 
@@ -62,6 +63,7 @@ class _CameraState extends State<Camera> {
   void initState() {
     // TODO: implement initState
     getImage(ImageSource.camera);
+    // getVideo(ImageSource.camera);
     vehicleInfo = Result(ownerName: "",colour: "",permanentAddress: "",manufacturerModel: "",manufacturer: "");
     super.initState();
   }
@@ -212,7 +214,7 @@ class _CameraState extends State<Camera> {
       'X-RapidAPI-Host': 'vehicle-rc-information.p.rapidapi.com/',
       'Content-Type': 'application/json'
     };
-    var request = https.Request('POST', Uri.parse('https://vehicle-rc-information.p.rapidapi.com/'));
+    var request = https.Request('POST', Uri.parse('$vehicleInfo'));
 
     String trimmedText = trimSpacesBetweenWords(scannedText);
     print(trimmedText);
@@ -246,6 +248,7 @@ class _CameraState extends State<Camera> {
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
       print(response.reasonPhrase);
     }
+    return null;
 
   }
 
@@ -263,12 +266,7 @@ class _CameraState extends State<Camera> {
           children: <Widget>[
             if(scanning) const CircularProgressIndicator(),
             if(!scanning && image == null)
-              const Padding(
-                padding: EdgeInsets.all(10.0),
-                child: Center(
-                  child:  CircularProgressIndicator(),
-                ),
-              ),
+              const CircularProgressIndicator(),
             if(image != null)
               Stack(
                 alignment: Alignment.bottomRight,
@@ -301,7 +299,7 @@ class _CameraState extends State<Camera> {
                   Expanded(child: Text("$scannedText")),
                   IconButton(
                       onPressed: (){
-                        final text = openDialog();
+                        openDialog();
                         setState(() {
                           scannedText;
                         });
@@ -459,7 +457,7 @@ class _CameraState extends State<Camera> {
 
     buildShowDialog(context);
     String trimmedText = trimSpacesBetweenWords(scannedText);
-    var request = https.Request('POST', Uri.parse('https://rto.sumerudigital.com/rto/Public_trafic/addVehicle'));
+    var request = https.Request('POST', Uri.parse('${publicTrafficAPI}addVehicle'));
 
     request.body = json.encode({
       "uuid": userid,
@@ -496,6 +494,7 @@ class _CameraState extends State<Camera> {
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
       print(response.reasonPhrase);
     }
+    return null;
   }
 
 
