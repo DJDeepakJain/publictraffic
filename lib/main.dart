@@ -3,6 +3,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:login_application/bottom_navigation.dart';
 import 'package:login_application/register_user.dart';
+import 'package:login_application/screens/camera_processing.dart';
+import 'package:login_application/screens/splash_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 Future main() async {
@@ -25,7 +28,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         useMaterial3: true,
       ),
-      home: const Login(),
+      home: SplashScreenPage(),
     );
   }
 }class Login extends StatefulWidget {
@@ -45,6 +48,7 @@ class _LoginState extends State<Login> {
     final formKey = GlobalKey<FormState>();
     var nameController = TextEditingController();
     var pswdController = TextEditingController();
+    bool login = false;
 
     return Scaffold(
         appBar: AppBar(
@@ -95,8 +99,6 @@ class _LoginState extends State<Login> {
     if (value!.isEmpty) {
     return 'Please Enter password';
     } else {
-
-
       return null;
                       }
                     },
@@ -151,7 +153,10 @@ class _LoginState extends State<Login> {
       var snackBar = const SnackBar(content: Text('Signed in Successfully'));
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
 
+      var sharedPref =await SharedPreferences.getInstance();
+      sharedPref.setBool(SplashScreenPageState.KEYLOGIN,true);
       Navigator.push(context, MaterialPageRoute(builder: (context) => const BottomNavigation()));
+
     } on FirebaseAuthException {
       Navigator.pop(context);
         ScaffoldMessenger.of(context).showSnackBar(

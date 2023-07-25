@@ -88,6 +88,7 @@ class ItemDetail extends StatelessWidget {
             height: 50,
           ),
           const Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(Icons.electric_bike_outlined),
               Text(
@@ -99,35 +100,36 @@ class ItemDetail extends StatelessWidget {
             ],
           ),
 
-          Row(
-            children: [
-              const Text(" Vehicle No. ",
-                style: TextStyle(
-                    fontSize: 20, fontWeight: FontWeight.w600),),
-              Text('${thisItem['VehicleNo']}',
-                style: const TextStyle(
-                    fontSize: 20, fontWeight: FontWeight.w600),)
-            ],
+          Padding(
+            padding: const EdgeInsets.fromLTRB(32, 8, 32, 8),
+            child: Row(
+              children: [
+                const Text(" Vehicle No. ",
+                  style: TextStyle(
+                      fontSize: 20, fontWeight: FontWeight.w400),),
+                Text('${thisItem['VehicleNo']}',
+                  style: const TextStyle(
+                      fontSize: 20, fontWeight: FontWeight.w400),)
+              ],
+            ),
           ),
 
-          Row(
-            children: [
-              const Text(
-                "Violation: ",
-                style: TextStyle(
-                    fontSize: 20, fontWeight: FontWeight.w600),
-              ),
-              Text(
-                " ${thisItem['Violation']}",
-                style: const TextStyle(
-                    fontSize: 16, fontWeight: FontWeight.w300),
-              ),
-            ],
-          ),
-          const Divider(
-            thickness: 1,
-            indent: 10,
-            color: Colors.grey,
+          Padding(
+            padding: const EdgeInsets.fromLTRB(32, 8, 32, 8),
+            child: Row(
+              children: [
+                const Text(
+                  "Violation: ",
+                  style: TextStyle(
+                      fontSize: 20, fontWeight: FontWeight.w400),
+                ),
+                Text(
+                  " ${thisItem['Violation']}",
+                  style: const TextStyle(
+                      fontSize: 16, fontWeight: FontWeight.w400),
+                ),
+              ],
+            ),
           ),
 
           const SizedBox(

@@ -204,20 +204,11 @@ class _CameraState extends State<Camera> {
     });
     _vehicleNo.clear();
   }
-  updateValue() {
-    // setState(() {
-    //   owner_Name.text = "$vehicleInfo.ownerName";
-    // });
-    //
-    // print(owner_Name.text);
-    // adress.text = "$vehicleInfo.permanentAddress";
-    // manu_model.text = "$vehicleInfo.manufacturerModel";
-    // bike_color.text = "$vehicleInfo.colour";
-  }
+
   Future<String?> vehicleDetails() async {
     buildShowDialog(context);
     var headers = {
-      'X-RapidAPI-Key': '9eea3a1274mshbbd50d54588c40cp1e0b65jsn25933c34f85e',
+      'X-RapidAPI-Key': 'f3a86a804amsh504cdacdd719efcp1f9567jsn62f85613f6d8',
       'X-RapidAPI-Host': 'vehicle-rc-information.p.rapidapi.com/',
       'Content-Type': 'application/json'
     };
@@ -295,9 +286,7 @@ class _CameraState extends State<Camera> {
                   )
                   ),
                 ),
-
-                ]
-              ),
+              ]),
             // ElevatedButton(
             //   onPressed: () => getImage(ImageSource.gallery),
             //   child: const Text('Pick an Image'),
@@ -323,11 +312,11 @@ class _CameraState extends State<Camera> {
               ),
             ),
             const SizedBox(height: 20,),
-            ElevatedButton(onPressed: vehicleDetails, child: const Text("Check vehicle details"),style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.blue),)),
+            ElevatedButton(onPressed: vehicleDetails, child: Text("Check vehicle details"),style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.blue),)),
             const SizedBox(height: 20,),
             isVisible? Container(
-              margin: const EdgeInsets.all(20),
-              padding: const EdgeInsets.all(4),
+              margin: EdgeInsets.all(20),
+              padding: EdgeInsets.all(4),
               width: 300,
               child: Visibility(
                 child: SingleChildScrollView(
@@ -339,7 +328,7 @@ class _CameraState extends State<Camera> {
                         children: <Widget>[
                           const Text('Owner Name: ', style: TextStyle(fontSize: 16,fontWeight: FontWeight.w600,color: Colors.black),
                               maxLines: 2),
-                          Text(vehicleInfo.ownerName.toString(),style: const TextStyle(fontSize: 16,fontWeight: FontWeight.w400,color: Colors.blue))
+                          Text(vehicleInfo.ownerName.toString(),style: TextStyle(fontSize: 16,fontWeight: FontWeight.w400,color: Colors.blue))
                         ],
                       ),
                       Row(
@@ -372,7 +361,7 @@ class _CameraState extends State<Camera> {
                 ),
               ),
             ):
-            const Text("PLease enter the vehicle number") ,
+            const  Text("PLease check the vehicle number") ,
             Container(
                 margin: const EdgeInsets.all(9),
                 height: 120,
@@ -419,7 +408,7 @@ class _CameraState extends State<Camera> {
                   }).toList(),)),
 
             Container(
-              margin: const EdgeInsets.fromLTRB(0, 0, 0, 50),
+              margin: EdgeInsets.fromLTRB(0, 0, 0, 50),
               child: ElevatedButton(
                 onPressed: () async {
                   _determinePosition();
@@ -431,7 +420,7 @@ class _CameraState extends State<Camera> {
                 },
                 child:OutlinedButton(
                   onPressed: postData,
-                  child: const Text('Upload'),
+                  child: Text('Upload'),
                 ) ,
               ),
 
