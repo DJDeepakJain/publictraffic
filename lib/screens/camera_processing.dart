@@ -211,17 +211,18 @@ class _CameraState extends State<Camera> {
   Future<String?> vehicleDetails() async {
     buildShowDialog(context);
     var headers = {
-      'X-RapidAPI-Key': '9eea3a1274mshbbd50d54588c40cp1e0b65jsn25933c34f85e',
+      'X-RapidAPI-Key': 'a71d96ee9cmshf305ca465fcefcbp1e1c58jsnb777bda3e9db',
       'X-RapidAPI-Host': 'vehicle-rc-information.p.rapidapi.com/',
       'Content-Type': 'application/json'
     };
     var request = https.Request('POST', Uri.parse('$vehicleInfoAPI'));
 
     String trimmedText = trimSpacesBetweenWords(scannedText);
+    String finalTrimmedText = removeSpecialCharacters(trimmedText);
     print(trimmedText);
 
     request.body = json.encode({
-      "VehicleNumber": trimmedText
+      "VehicleNumber": finalTrimmedText
     });
 
     request.headers.addAll(headers);
@@ -245,7 +246,7 @@ class _CameraState extends State<Camera> {
     }
     else {
       Navigator.pop(context);
-      var snackBar = const SnackBar(content: Text('No data found - Please check vehicle number'));
+      var snackBar = const SnackBar(content: Text('Too many requests'));
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
       print(response.reasonPhrase);
     }
@@ -253,7 +254,7 @@ class _CameraState extends State<Camera> {
 
   }
 
-  String selectedValue='Triple riding';
+  String selectedValue='Select type of voilation';
   @override
   Widget build(BuildContext context) {
 
@@ -291,8 +292,8 @@ class _CameraState extends State<Camera> {
             //   child: const Text('Pick an Image'),
             // ),
             const SizedBox(height: 20,),
-            Padding(
-              padding: const EdgeInsets.all(15.0),
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: 50,vertical: 5),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -311,9 +312,9 @@ class _CameraState extends State<Camera> {
               ),
             ),
             const SizedBox(height: 20,),
-            ElevatedButton(onPressed: vehicleDetails, child: Text("Check vehicle details"),style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.blue),)),
+            ElevatedButton(onPressed: vehicleDetails, child: Text("Check vehicle details",style: TextStyle(color: Colors.white),),style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.deepOrange),)),
             const SizedBox(height: 20,),
-            isVisible? Container(
+            if (isVisible) Container(
               margin: EdgeInsets.all(20),
               padding: EdgeInsets.all(4),
               width: 300,
@@ -327,31 +328,31 @@ class _CameraState extends State<Camera> {
                         children: <Widget>[
                           const Text('Owner Name: ', style: TextStyle(fontSize: 16,fontWeight: FontWeight.w600,color: Colors.black),
                               maxLines: 2),
-                          Text(vehicleInfo.ownerName.toString(),style: TextStyle(fontSize: 16,fontWeight: FontWeight.w400,color: Colors.blue))
+                          Text(vehicleInfo.ownerName.toString(),style: TextStyle(fontSize: 16,fontWeight: FontWeight.w400,color: Colors.orangeAccent))
                         ],
                       ),
                       Row(
                         children: <Widget>[
                           const Text('Address: ', style: TextStyle(fontSize: 16,fontWeight: FontWeight.w600,color: Colors.black),),
-                          Text(vehicleInfo.permanentAddress.toString(), style: const TextStyle(fontSize: 16,fontWeight: FontWeight.w400,color: Colors.blue))
+                          Text(vehicleInfo.permanentAddress.toString(), style: const TextStyle(fontSize: 16,fontWeight: FontWeight.w400,color: Colors.orangeAccent))
                         ],
                       ),
                       Row(
                         children: <Widget>[
                           const Text('Model: ', style: TextStyle(fontSize: 16,fontWeight: FontWeight.w600,color: Colors.black),),
-                          Text(vehicleInfo.manufacturerModel.toString(), style: const TextStyle(fontSize: 16,fontWeight: FontWeight.w400,color: Colors.blue))
+                          Text(vehicleInfo.manufacturerModel.toString(), style: const TextStyle(fontSize: 16,fontWeight: FontWeight.w400,color: Colors.orangeAccent))
                         ],
                       ),
                       Row(
                         children: <Widget>[
                           const Text('Manufacturer: ', style: TextStyle(fontSize: 16,fontWeight: FontWeight.w600,color: Colors.black),),
-                          Text(vehicleInfo.manufacturer.toString(), style: const TextStyle(fontSize: 16,fontWeight: FontWeight.w400,color: Colors.blue))
+                          Text(vehicleInfo.manufacturer.toString(), style: const TextStyle(fontSize: 16,fontWeight: FontWeight.w400,color: Colors.orangeAccent))
                         ],
                       ),
                       Row(
                         children: <Widget>[
                           const Text('Colour: ', style: TextStyle(fontSize: 16,fontWeight: FontWeight.w600,color: Colors.black),),
-                          Text(vehicleInfo.colour.toString(), style: const TextStyle(fontSize: 16,fontWeight: FontWeight.w400,color: Colors.blue))
+                          Text(vehicleInfo.colour.toString(), style: const TextStyle(fontSize: 16,fontWeight: FontWeight.w400,color: Colors.orangeAccent))
                         ],
                       )
 
@@ -359,51 +360,52 @@ class _CameraState extends State<Camera> {
                   ),
                 ),
               ),
-            ):
-            const  Text("PLease check the vehicle number") ,
-            Container(
-                margin: const EdgeInsets.all(9),
-                height: 120,
-                width: 250,
-                child: DropdownButtonFormField<String>(
+            ) ,
+    //        else const  Text("Please check the vehicle number") ,
+                  Container(
+                  margin: const EdgeInsets.all(9),
+                  height: 100,
+                  width: 250,
+                  child: DropdownButtonFormField<String>(
                   decoration: const InputDecoration(
-                    labelText: 'Select type of voilation',
+                  //        labelText: 'Select type of voilation',
                   ),
                   dropdownColor: Colors.white,
                   isExpanded: true,
                   value: selectedValue,
                   icon: const Icon(Icons.arrow_downward),onChanged: (String?  newValue){
                   setState((){
-                    selectedValue = newValue!;
-                    print(newValue);
+                  selectedValue = newValue!;
+                  print(newValue);
                   });
-                },
+                  },
                   items :<String>[
-                    'Triple riding',
-                    'Speeding',
-                    'Drunk driving',
-                    'Jumping traffic signals',
-                    'Wrong-way driving',
-                    'Using mobile phones while driving',
-                    'Improper overtaking',
-                    'Driving without a valid license',
-                    'Overloading vehicles',
-                    'Not wearing seat belts or helmets',
-                    'Violation of lane discipline',
-                    'Littering / Throwing garbage out of vehicle',
-                    'Driving two-wheeler with more than two passengers',
-                    'Driving on footpath',
-                    'Driving in one-way',
-                    'Rash driving',
-                    'Driving a four-wheeler in the night with only one headlight',
-                    'Driving in the night with no brake lights',
-                    'Driving a two or three-wheeler in the night with no headlight',
-                    'Driving without a silencer',
-                    'Driving a vehicle emitting excessive pollution and smoke' ]
+                  'Select type of voilation',
+                  'Triple Riding'
+                  'Speeding',
+                  'Drunk driving',
+                  'Jumping traffic signals',
+                  'Wrong-way driving',
+                  'Using mobile phones while driving',
+                  'Improper overtaking',
+                  'Driving without a valid license',
+                  'Overloading vehicles',
+                  'Not wearing seat belts or helmets',
+                  'Violation of lane discipline',
+                  'Littering / Throwing garbage out of vehicle',
+                  'Driving two-wheeler with more than two passengers',
+                  'Driving on footpath',
+                  'Driving in one-way',
+                  'Rash driving',
+                  'Driving a four-wheeler in the night with only one headlight',
+                  'Driving in the night with no brake lights',
+                  'Driving a two or three-wheeler in the night with no headlight',
+                  'Driving without a silencer',
+                  'Driving a vehicle emitting excessive pollution and smoke' ]
                       .map<DropdownMenuItem<String>>((String value){
-                    return DropdownMenuItem<String>(
-                        value : value,
-                        child : Text(value));
+                  return DropdownMenuItem<String>(
+                  value : value,
+                  child : Text(value));
                   }).toList(),)),
 
             Container(
@@ -414,13 +416,11 @@ class _CameraState extends State<Camera> {
 
                   status = "Approval Pending";
                   reward = "Processing";
-
-
                 },
-                child:OutlinedButton(
+                child:TextButton(
                   onPressed: postData,
-                  child: Text('Upload'),
-                ) ,
+                  child: Text('Submit',style: TextStyle(color: Colors.white),),
+                ),style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.green)),
               ),
 
             //  Text("Number Plate: ${scannedText}",
@@ -459,10 +459,12 @@ class _CameraState extends State<Camera> {
 
     buildShowDialog(context);
     String trimmedText = trimSpacesBetweenWords(scannedText);
+    String finalTrimmedText = removeSpecialCharacters(trimmedText);
     var request = https.Request('POST', Uri.parse('${publicTrafficAPI}addVehicle'));
+
     request.body = json.encode({
       "uuid": userid,
-      "VehicleNo": trimmedText,
+      "VehicleNo": finalTrimmedText,
       // "color" : vehicleInfo.colour,
       // "model" : vehicleInfo.manufacturerModel,
       // "manufacturer" : vehicleInfo.manufacturer,
@@ -496,6 +498,13 @@ class _CameraState extends State<Camera> {
       print(response.reasonPhrase);
     }
     return null;
+  }
+
+  String removeSpecialCharacters(String trimmedText) {
+    final regex = RegExp(r'[^\w\s]', multiLine: true, caseSensitive: false);
+
+    // Use the replaceAll method to replace all occurrences of special characters with an empty string
+    return trimmedText.replaceAll(regex, '');
   }
 
 

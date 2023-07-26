@@ -107,12 +107,14 @@ class ItemDetail extends StatelessWidget {
             padding: const EdgeInsets.fromLTRB(32, 8, 32, 8),
             child: Row(
               children: [
-                const Text(" Vehicle No: ",
+                const Text(" Vehicle No : ",
                   style: TextStyle(
                       fontSize: 20, fontWeight: FontWeight.w400),),
-                Text('${thisItem['VehicleNo']}',
-                  style: const TextStyle(color: Colors.deepOrangeAccent,
-                      fontSize: 20, fontWeight: FontWeight.w400),)
+                Expanded(
+                  child: Text('${thisItem['VehicleNo']}',
+                    style: const TextStyle(
+                        fontSize: 20, fontWeight: FontWeight.w400),),
+                )
               ],
             ),
           ),
@@ -122,16 +124,14 @@ class ItemDetail extends StatelessWidget {
             child: Row(
               children: [
                 const Text(
-                  "Violation: ",
+                  "Violation : ",
                   style: TextStyle(
                       fontSize: 20, fontWeight: FontWeight.w400),
                 ),
-                Expanded(
-                  child: Text(
-                    " ${thisItem['Violation']}",
-                    style: const TextStyle(color: Colors.deepOrangeAccent,
-                        fontSize: 16, fontWeight: FontWeight.w400),
-                  ),
+                Text(
+                  " ${thisItem['Violation']}",
+                  style: const TextStyle(
+                      fontSize: 16, fontWeight: FontWeight.w400),
                 ),
               ],
             ),
@@ -141,7 +141,7 @@ class ItemDetail extends StatelessWidget {
             height: 20,
           ),
 
-          const Text('Current Status : ',
+          const Text('Current Reward : ',
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),),
 
           const SizedBox(
@@ -149,36 +149,38 @@ class ItemDetail extends StatelessWidget {
           ),
 
           Padding(
-            padding: const EdgeInsets.fromLTRB(32, 8, 32, 8),
+            padding: const EdgeInsets.all(16.0),
             child: Row(
               children: [
                 const Text(
-                  'Status: ',
+                  'Status : ',
                   style: TextStyle(
                       fontSize: 20, fontWeight: FontWeight.w600),
                 ),
-                thisItem['Status'] != 0?
-                const Text(
+                if (thisItem['Status'] == '1') const Text(
                   'Accepted',
-                  style: TextStyle(color: Colors.deepOrangeAccent,
+                  style: TextStyle(
                       fontSize: 16, fontWeight: FontWeight.w300),
-                ):
-      const Text(
+                ) else  if (thisItem['Status'] == '0')const Text(
       'Processing',
       style: TextStyle(
       fontSize: 16, fontWeight: FontWeight.w300),
-      )
+      ) else  if (thisItem['Status'] == '2')const Text(
+                  'Rejected',
+                  style: TextStyle(
+                      fontSize: 16, fontWeight: FontWeight.w300),
+                )
       ],
             ),
           ),
           const Divider(
             thickness: 1,
-            indent: 10,
+            indent: 80,
+            endIndent: 20,
             color: Colors.grey,
           ),
-          thisItem['Status'] != 0 && thisItem['Status'] != null?
-          Padding(
-            padding: const EdgeInsets.fromLTRB(32, 8, 32, 8),
+          if (thisItem['Status'] == "1") Padding(
+            padding: const EdgeInsets.all(8.0),
             child: Row(
               children: [
                 const Text(
@@ -188,28 +190,33 @@ class ItemDetail extends StatelessWidget {
                 ),
                 Text(
                   '${thisItem['Reward']}',
-                  style: const TextStyle(color: Colors.deepOrangeAccent,
+                  style: const TextStyle(
                       fontSize: 16, fontWeight: FontWeight.w300),
                 ),
               ],
             ),
-          ):Container(),
+          ) else Container(),
           thisItem['Status'] != 0 && thisItem['Status'] != null?
           const Divider(
             thickness: 1,
-            indent: 10,
+            indent: 80,
+            endIndent: 20,
             color: Colors.grey,
           ):Container(),
           const SizedBox(height: 20,),
-          const Row(
-            children: [
-              Icon(Icons.location_on_outlined),
-              Text("Location", style: TextStyle(
-                  fontSize: 20, fontWeight: FontWeight.w600),),
-            ],
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: const Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(Icons.location_on_outlined),
+                Text("Location :", style: TextStyle(
+                    fontSize: 20, fontWeight: FontWeight.w600),),
+              ],
+            ),
           ),
           Padding(
-            padding: const EdgeInsets.fromLTRB(32, 8, 32, 8),
+            padding: const EdgeInsets.all(8.0),
             child: Row(
               children: [
                 const Text(
@@ -217,50 +224,50 @@ class ItemDetail extends StatelessWidget {
                     fontSize: 16, fontWeight: FontWeight.w300),
                 ),
                 Text(
-                    '${thisItem['Locality']}',style: const TextStyle(color: Colors.deepOrangeAccent,),
+                    '${thisItem['Locality']}'
                 ),
 
                 Text(
-                    '${thisItem['PostalCode']}',
-                style: const TextStyle(color: Colors.deepOrangeAccent,),
-
-            ),
-            ]
-          ),
-          ),
-          const Divider(
-            thickness: 1,
-            indent: 10,
-            color: Colors.grey,
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(32, 8, 32, 8),
-            child: Row(
-              children: [
-                const Text(
-                  'Latitude: ',
-                  style: TextStyle(color: Colors.deepOrangeAccent,
-                      fontSize: 16, fontWeight: FontWeight.w300),
-                ),
-                Text(
-                  '${thisItem['Latitude']}',
-                  style: const TextStyle(fontSize: 16,color: Colors.deepOrangeAccent,),
+                    '${thisItem['PostalCode']}'
                 ),
               ],
             ),
           ),
           const Divider(
             thickness: 1,
-            indent: 10,
+            indent: 80,
+            endIndent: 20,
             color: Colors.grey,
           ),
           Padding(
-            padding: const EdgeInsets.fromLTRB(32, 8, 32, 8),
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              children: [
+                const Text(
+                  'Latitude: ',
+                  style: TextStyle(
+                      fontSize: 16, fontWeight: FontWeight.w300),
+                ),
+                Text(
+                  '${thisItem['Latitude']}',
+                  style: const TextStyle(fontSize: 16),
+                ),
+              ],
+            ),
+          ),
+          const Divider(
+            thickness: 1,
+            indent: 80,
+            endIndent: 20,
+            color: Colors.grey,
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
             child: Row(
               children: [
                 const Text(
                   'Longitude: ',
-                  style: TextStyle(color: Colors.deepOrangeAccent,
+                  style: TextStyle(
                       fontSize: 16, fontWeight: FontWeight.w300),
                 ),
                 Text(
@@ -272,7 +279,8 @@ class ItemDetail extends StatelessWidget {
           ),
           const Divider(
             thickness: 1,
-            indent: 10,
+            indent: 80,
+            endIndent: 20,
             color: Colors.grey,
           ),
           const SizedBox(height: 20,)

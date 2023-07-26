@@ -1,9 +1,12 @@
+import 'dart:convert';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:login_application/screens/register_user.dart';
 import 'package:login_application/screens/splash_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../bottom_navigation.dart';
+import 'package:http/http.dart' as https;
 
 class Login extends StatefulWidget {
   const Login({super.key,});
@@ -121,22 +124,37 @@ class _LoginState extends State<Login> {
   Future<void> signInUser({required BuildContext context, required String emailMobile, required String password}) async {
 
     try {
-      await FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: emailMobile, password: password);
-      Navigator.pop(context);
-      var snackBar = const SnackBar(content: Text('Signed in Successfully'));
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  //    await FirebaseAuth.instance.signInWithEmailAndPassword(email: emailMobile, password: password);
+      var headers = {
+        'Content-Type': 'application/json'
+      };
+      var request = https.Request('POST', Uri.parse('https://rto.sumerudigital.com/rto/Public_trafic/login'));
+      request.body = json.encode({
+        "username": "$emailMobile",
+        "password": "$password"
+      });
+      request.headers.addAll(headers);
+      https.StreamedResponse response = await request.send();
+      if (response.statusCode == 200) {
+        Navigator.pop(context);
+        var snackBar = const SnackBar(content: Text('Signed in Successfully'));
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        Navigator.push(context, MaterialPageRoute(builder: (context) => const BottomNavigation()));
+        print(await response.stream.bytesToString());
+      }
+      else {
+        Navigator.pop(context);
+        print(response.reasonPhrase);
+      }
 
       var sharedPref =await SharedPreferences.getInstance();
       sharedPref.setBool(SplashScreenPageState.KEYLOGIN,true);
-      Navigator.push(context, MaterialPageRoute(builder: (context) => const BottomNavigation()));
 
     } on FirebaseAuthException {
       Navigator.pop(context);
       ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('No user Found with this Email')));
     }
-
   }
 
   buildShowDialog(BuildContext context) {

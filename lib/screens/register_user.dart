@@ -1,9 +1,11 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:http/http.dart' as https;
 import 'login.dart';
 
 
@@ -182,15 +184,35 @@ class RegisterUser extends StatelessWidget {
       //   'email/mobile' : emailmobile,
       //   'password' : pswd
       // });
-      //  await doc_user.set(json);
-      UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: emailmobile, password: pswd);
-      String userid = userCredential.user!.uid;
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      prefs.setString('user_uuid', userid);
-      Navigator.pop(context);
-      var snackBar = SnackBar(content: Text('User Registered Successfully'));
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
-      Navigator.push(context, MaterialPageRoute(builder: (context)=> Login()));
+      // //  await doc_user.set(json);
+      // UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: emailmobile, password: pswd);
+      // String userid = userCredential.user!.uid;
+      // SharedPreferences prefs = await SharedPreferences.getInstance();
+      // prefs.setString('user_uuid', userid);
+
+      var headers = {
+        'Content-Type': 'application/json',
+      };
+      var request = https.Request('POST', Uri.parse('https://rto.sumerudigital.com/rto/Public_trafic/register?Content-Type=application/json'));
+      request.body = json.encode({
+        "name": "$first_name + $last_name",
+        "email": "#$emailmobile",
+        "password": "$pswd"
+      });
+      request.headers.addAll(headers);
+      https.StreamedResponse response = await request.send();
+      if (response.statusCode == 200) {
+        Navigator.pop(context);
+        var snackBar = SnackBar(content: Text('User Registered Successfully'));
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        Navigator.push(context, MaterialPageRoute(builder: (context)=> Login()));
+        print(await response.stream.bytesToString());
+      }
+      else {
+        Navigator.pop(context);
+        print(response.reasonPhrase);
+      }
+
     } catch(e){
       Navigator.pop(context);
       var snackBar = SnackBar(content: Text('Some error occured'));
