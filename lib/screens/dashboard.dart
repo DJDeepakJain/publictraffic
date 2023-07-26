@@ -75,7 +75,7 @@ class Dashboard extends StatelessWidget {
                       ),
                         title: Text('${thisItem['VehicleNo']}'),
                         subtitle: Text('${thisItem['Violation']}'),
-                        trailing: Text('${thisItem['Reward']}'),
+                        trailing: Text('₹${thisItem['Reward']}'),
 
                         onTap: () {
                           Navigator.of(context).push(MaterialPageRoute(

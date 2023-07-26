@@ -180,6 +180,8 @@ class _CameraState extends State<Camera> {
         currentAdress = '${place.locality},${place.country}';
         _latitude = position.latitude;
         _longitude = position.longitude;
+
+
       });
     }
     catch(e){
@@ -454,6 +456,7 @@ class _CameraState extends State<Camera> {
 
   Future<String?> postData() async {
     _determinePosition();
+    print(postalCode);
     String imageText = await imageToBase64(imageFile);
     _image = "data:image/png;base64,$imageText";
     SharedPreferences prefs = await SharedPreferences.getInstance();

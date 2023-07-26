@@ -8,6 +8,8 @@ class ItemDetail extends StatelessWidget {
   final String ind;
   ItemDetail(this.ind, {super.key});
 
+
+
   Map<String, dynamic> infoList = {};
   Future fetchData() async {
 
@@ -55,7 +57,8 @@ class ItemDetail extends StatelessWidget {
                 'Locality': e['locality'],
                 'PostalCode': e['postalCode'],
                 'Latitude':e['latitude'],
-                'Longitude':e['longitude']
+                'Longitude':e['longitude'],
+                'Status':e['status']
               }
               ).toList();
               return ListView.builder(
@@ -141,72 +144,74 @@ class ItemDetail extends StatelessWidget {
             height: 20,
           ),
 
-      //     const Text('Current Reward : ',
-      //       style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),),
-      //
-      //     const SizedBox(
-      //       height: 10,
-      //     ),
-      //
-      //     Padding(
-      //       padding: const EdgeInsets.all(16.0),
-      //       child: Row(
-      //         children: [
-      //           const Text(
-      //             'Status : ',
-      //             style: TextStyle(
-      //                 fontSize: 20, fontWeight: FontWeight.w600),
-      //           ),
-      //           if (thisItem['Status'] == '1') const Text(
-      //             'Accepted',
-      //             style: TextStyle(
-      //                 fontSize: 16, fontWeight: FontWeight.w300),
-      //           ) else  if (thisItem['Status'] == '0')const Text(
-      // 'Processing',
-      // style: TextStyle(
-      // fontSize: 16, fontWeight: FontWeight.w300),
-      // ) else  if (thisItem['Status'] == '2')const Text(
-      //             'Rejected',
-      //             style: TextStyle(
-      //                 fontSize: 16, fontWeight: FontWeight.w300),
-      //           )
-      // ],
-      //       ),
-      //     ),
-      //     const Divider(
-      //       thickness: 1,
-      //       indent: 80,
-      //       endIndent: 20,
-      //       color: Colors.grey,
-      //     ),
-      //     if (thisItem['Status'] == "1") Padding(
-      //       padding: const EdgeInsets.all(8.0),
-      //       child: Row(
-      //         children: [
-      //           const Text(
-      //             'Reward: ',
-      //             style: TextStyle(
-      //                 fontSize: 20, fontWeight: FontWeight.w600),
-      //           ),
-      //           Text(
-      //             '${thisItem['Reward']}',
-      //             style: const TextStyle(
-      //                 fontSize: 16, fontWeight: FontWeight.w300),
-      //           ),
-      //         ],
-      //       ),
-      //     ) else Container(),
-      //     thisItem['Status'] != 0 && thisItem['Status'] != null?
-      //     const Divider(
-      //       thickness: 1,
-      //       indent: 80,
-      //       endIndent: 20,
-      //       color: Colors.grey,
-      //     ):Container(),
-      //     const SizedBox(height: 20,),
+          const Text('Current Reward : ',
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),),
+
+          const SizedBox(
+            height: 10,
+          ),
+
           Padding(
             padding: const EdgeInsets.all(16.0),
-            child: const Row(
+            child: Row(
+              children: [
+                const Text(
+                  'Status : ',
+                  style: TextStyle(
+                      fontSize: 20, fontWeight: FontWeight.w600),
+                ),
+
+                if (thisItem['Status'] == "1")
+                  const Text('Accepted',
+                  style: TextStyle(
+                      fontSize: 16, fontWeight: FontWeight.w300),
+                )
+                else  if (thisItem['Status'] == "0")const Text(
+      'Processing',
+      style: TextStyle(
+      fontSize: 16, fontWeight: FontWeight.w300),
+      ) else  if (thisItem['Status'] == 2)const Text(
+                  'Rejected',
+                  style: TextStyle(
+                      fontSize: 16, fontWeight: FontWeight.w300),
+                )
+      ],
+            ),
+          ),
+          const Divider(
+            thickness: 1,
+            indent: 80,
+            endIndent: 20,
+            color: Colors.grey,
+          ),
+          if (thisItem['Status'] == "1") Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              children: [
+                const Text(
+                  'Reward: ',
+                  style: TextStyle(
+                      fontSize: 20, fontWeight: FontWeight.w600),
+                ),
+                Text(
+                  '₹${thisItem['Reward']}',
+                  style: const TextStyle(
+                      fontSize: 16, fontWeight: FontWeight.w300),
+                ),
+              ],
+            ),
+          ) else Container(),
+          thisItem['Status'] != "0" ?
+          const Divider(
+            thickness: 1,
+            indent: 80,
+            endIndent: 20,
+            color: Colors.grey,
+          ):Container(),
+          const SizedBox(height: 20,),
+          const Padding(
+            padding: EdgeInsets.all(16.0),
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(Icons.location_on_outlined),
@@ -228,7 +233,7 @@ class ItemDetail extends StatelessWidget {
                 ),
 
                 Text(
-                    '${thisItem['PostalCode']}'
+                    '${thisItem[' PostalCode']}'
                 ),
               ],
             ),
@@ -296,4 +301,5 @@ class ItemDetail extends StatelessWidget {
           }),
     );
   }
+
 }
