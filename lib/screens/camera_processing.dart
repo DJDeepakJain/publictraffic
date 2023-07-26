@@ -411,9 +411,17 @@ class _CameraState extends State<Camera> {
 
             Container(
               margin: EdgeInsets.fromLTRB(0, 0, 0, 50),
-              child: TextButton(
-                onPressed: postData,
-                child: Text('Submit',style: TextStyle(color: Colors.white,backgroundColor: Colors.green),),
+              child: ElevatedButton(
+                onPressed: () async {
+                  _determinePosition();
+
+                  status = "Approval Pending";
+                  reward = "Processing";
+                },
+                child:TextButton(
+                  onPressed: postData,
+                  child: Text('Submit',style: TextStyle(color: Colors.white),),
+                ),style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.green)),
               ),
 
             //  Text("Number Plate: ${scannedText}",
@@ -483,7 +491,6 @@ class _CameraState extends State<Camera> {
       var snackBar = const SnackBar(content: Text('Details successfully submitted'));
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
       Navigator.push(context, MaterialPageRoute(builder: (context)=>Dashboard()));
-
     }
     else {
       Navigator.pop(context);
