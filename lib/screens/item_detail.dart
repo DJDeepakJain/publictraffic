@@ -170,7 +170,7 @@ class ItemDetail extends StatelessWidget {
       'Processing',
       style: TextStyle(
       fontSize: 16, fontWeight: FontWeight.w300),
-      ) else  if (thisItem['Status'] == 2)const Text(
+      ) else  if (thisItem['Status'] == "2")const Text(
                   'Rejected',
                   style: TextStyle(
                       fontSize: 16, fontWeight: FontWeight.w300),
