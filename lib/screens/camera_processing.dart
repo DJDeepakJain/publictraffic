@@ -180,7 +180,7 @@ class _CameraState extends State<Camera> {
         currentAdress = '${place.locality},${place.country}';
         _latitude = position.latitude;
         _longitude = position.longitude;
-
+       postalCode = '${place.postalCode}';
 
       });
     }
@@ -257,13 +257,13 @@ class _CameraState extends State<Camera> {
 
   }
 
-  String selectedValue='Select type of voilation';
+  String selectedValue='Select Type Of Violation';
   @override
   Widget build(BuildContext context) {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Number Plate detector'),
+        title: const Text('Number Plate Detector'),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -371,7 +371,7 @@ class _CameraState extends State<Camera> {
                   width: 250,
                   child: DropdownButtonFormField<String>(
                   decoration: const InputDecoration(
-                  //        labelText: 'Select type of voilation',
+                  //        labelText: 'Select type of violation',
                   ),
                   dropdownColor: Colors.white,
                   isExpanded: true,
@@ -383,27 +383,19 @@ class _CameraState extends State<Camera> {
                   });
                   },
                   items :<String>[
-                  'Select type of voilation',
+                  'Select Type Of Violation',
                   'Triple Riding'
-                  'Speeding',
-                  'Drunk driving',
-                  'Jumping traffic signals',
-                  'Wrong-way driving',
+                  'Jumping Traffic Signals',
                   'Using mobile phones while driving',
-                  'Improper overtaking',
-                  'Driving without a valid license',
-                  'Overloading vehicles',
+                  'Overloading Vehicles',
                   'Not wearing seat belts or helmets',
                   'Violation of lane discipline',
                   'Littering / Throwing garbage out of vehicle',
                   'Driving two-wheeler with more than two passengers',
                   'Driving on footpath',
                   'Driving in one-way',
-                  'Rash driving',
                   'Driving a four-wheeler in the night with only one headlight',
-                  'Driving in the night with no brake lights',
                   'Driving a two or three-wheeler in the night with no headlight',
-                  'Driving without a silencer',
                   'Driving a vehicle emitting excessive pollution and smoke' ]
                       .map<DropdownMenuItem<String>>((String value){
                   return DropdownMenuItem<String>(
@@ -414,11 +406,7 @@ class _CameraState extends State<Camera> {
             Container(
               margin: EdgeInsets.fromLTRB(0, 0, 0, 50),
               child: ElevatedButton(
-                onPressed: () async {
-                  _determinePosition();
-
-                  status = "Approval Pending";
-                  reward = "Processing";
+                onPressed: (){
                 },
                 child:TextButton(
                   onPressed: postData,
@@ -470,10 +458,10 @@ class _CameraState extends State<Camera> {
     request.body = json.encode({
       "uuid": userid,
       "VehicleNo": finalTrimmedText,
-      // "color" : vehicleInfo.colour,
-      // "model" : vehicleInfo.manufacturerModel,
-      // "manufacturer" : vehicleInfo.manufacturer,
-      // "owner_name" : vehicleInfo.ownerName,
+      "Colour" : vehicleInfo.colour,
+      "Model" : vehicleInfo.manufacturerModel,
+      "Manufacturer" : vehicleInfo.manufacturer,
+      "OwnerName" : vehicleInfo.ownerName,
       "Date" : DateTime.now().toIso8601String(),
       "Violation" : selectedValue,
       "Latitude" : _latitude,

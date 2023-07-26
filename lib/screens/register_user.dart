@@ -195,8 +195,8 @@ class RegisterUser extends StatelessWidget {
       };
       var request = https.Request('POST', Uri.parse('https://rto.sumerudigital.com/rto/Public_trafic/register?Content-Type=application/json'));
       request.body = json.encode({
-        "name": "$first_name + $last_name",
-        "email": "#$emailmobile",
+        "name": "$first_name  $last_name",
+        "email": "$emailmobile",
         "password": "$pswd"
       });
       request.headers.addAll(headers);
