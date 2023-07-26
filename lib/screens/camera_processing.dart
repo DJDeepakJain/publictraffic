@@ -28,12 +28,13 @@ class _CameraState extends State<Camera> {
   img.Image binaryImage = img.Image(width:1, height:1); // Set initial size to avoid null
   String scannedText = '';
   bool scanning = false;
-  String? _image;
+  // late Future<String> _image;
+  String _image = '';
   late String status='Approval Pending';
   late String text;
   late String reward='Processing';
-  late double _latitude=123;
-  late double _longitude=123;
+  late double _latitude=0;
+  late double _longitude=0;
   String userid='';
   String currentAdress = '';
   String trimmedText='';
@@ -210,11 +211,11 @@ class _CameraState extends State<Camera> {
   Future<String?> vehicleDetails() async {
     buildShowDialog(context);
     var headers = {
-      'X-RapidAPI-Key': 'f3a86a804amsh504cdacdd719efcp1f9567jsn62f85613f6d8',
+      'X-RapidAPI-Key': '9eea3a1274mshbbd50d54588c40cp1e0b65jsn25933c34f85e',
       'X-RapidAPI-Host': 'vehicle-rc-information.p.rapidapi.com/',
       'Content-Type': 'application/json'
     };
-    var request = https.Request('POST', Uri.parse('$vehicleInfo'));
+    var request = https.Request('POST', Uri.parse('$vehicleInfoAPI'));
 
     String trimmedText = trimSpacesBetweenWords(scannedText);
     print(trimmedText);
@@ -451,14 +452,14 @@ class _CameraState extends State<Camera> {
   }
 
   Future<String?> postData() async {
-
+    String imageText = await imageToBase64(imageFile);
+    _image = "data:image/png;base64,$imageText";
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString('user_uuid', userid);
 
     buildShowDialog(context);
     String trimmedText = trimSpacesBetweenWords(scannedText);
     var request = https.Request('POST', Uri.parse('${publicTrafficAPI}addVehicle'));
-
     request.body = json.encode({
       "uuid": userid,
       "VehicleNo": trimmedText,

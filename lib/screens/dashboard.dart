@@ -67,10 +67,11 @@ class Dashboard extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: ListTile(
+
                       leading: CircleAvatar(
                         backgroundColor: Colors.amber,
                         backgroundImage:
-                        NetworkImage('${thisItem['Photos']}'),
+                        NetworkImage('$profileImage${thisItem['Photos']}'),
                       ),
                         title: Text('${thisItem['VehicleNo']}'),
                         subtitle: Text('${thisItem['Violation']}'),
