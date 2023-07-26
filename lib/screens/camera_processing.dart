@@ -33,12 +33,12 @@ class _CameraState extends State<Camera> {
   late String status='Approval Pending';
   late String text;
   late String reward='Processing';
-  late double _latitude=0;
-  late double _longitude=0;
+  late double _latitude;
+  late double _longitude;
   String userid='';
   String currentAdress = '';
   String trimmedText='';
-  String postalCode = '775788';
+  String postalCode = '';
   late Position currentPosition;
   String vehicleNo = '';
   String colour = '';
@@ -65,6 +65,7 @@ class _CameraState extends State<Camera> {
     // TODO: implement initState
     getImage(ImageSource.camera);
     // getVideo(ImageSource.camera);
+    _determinePosition();
     vehicleInfo = Result(ownerName: "",colour: "",permanentAddress: "",manufacturerModel: "",manufacturer: "");
     super.initState();
   }
@@ -410,17 +411,9 @@ class _CameraState extends State<Camera> {
 
             Container(
               margin: EdgeInsets.fromLTRB(0, 0, 0, 50),
-              child: ElevatedButton(
-                onPressed: () async {
-                  _determinePosition();
-
-                  status = "Approval Pending";
-                  reward = "Processing";
-                },
-                child:TextButton(
-                  onPressed: postData,
-                  child: Text('Submit',style: TextStyle(color: Colors.white),),
-                ),style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.green)),
+              child: TextButton(
+                onPressed: postData,
+                child: Text('Submit',style: TextStyle(color: Colors.white,backgroundColor: Colors.green),),
               ),
 
             //  Text("Number Plate: ${scannedText}",
@@ -452,6 +445,7 @@ class _CameraState extends State<Camera> {
   }
 
   Future<String?> postData() async {
+    _determinePosition();
     String imageText = await imageToBase64(imageFile);
     _image = "data:image/png;base64,$imageText";
     SharedPreferences prefs = await SharedPreferences.getInstance();
