@@ -181,7 +181,6 @@ class _CameraState extends State<Camera> {
         _latitude = position.latitude;
         _longitude = position.longitude;
        postalCode = '${place.postalCode}';
-
       });
     }
     catch(e){
@@ -254,7 +253,6 @@ class _CameraState extends State<Camera> {
       print(response.reasonPhrase);
     }
     return null;
-
   }
 
   String selectedValue='Select Type Of Violation';
@@ -315,7 +313,8 @@ class _CameraState extends State<Camera> {
               ),
             ),
             const SizedBox(height: 20,),
-            ElevatedButton(onPressed: vehicleDetails, child: Text("Check vehicle details",style: TextStyle(color: Colors.white),),style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.deepOrange),)),
+            ElevatedButton(onPressed: vehicleDetails, child: Text("Check vehicle details",style: TextStyle(color: Colors.white),),
+                style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Color(0xFF17407D)),)),
             const SizedBox(height: 20,),
             if (isVisible) Container(
               margin: EdgeInsets.all(20),
@@ -331,31 +330,31 @@ class _CameraState extends State<Camera> {
                         children: <Widget>[
                           const Text('Owner Name: ', style: TextStyle(fontSize: 16,fontWeight: FontWeight.w600,color: Colors.black),
                               maxLines: 2),
-                          Text(vehicleInfo.ownerName.toString(),style: TextStyle(fontSize: 16,fontWeight: FontWeight.w400,color: Colors.orangeAccent))
+                          Text(vehicleInfo.ownerName.toString(),style: TextStyle(fontSize: 16,fontWeight: FontWeight.w400,color: Color(0xFFFFCA00)))
                         ],
                       ),
                       Row(
                         children: <Widget>[
                           const Text('Address: ', style: TextStyle(fontSize: 16,fontWeight: FontWeight.w600,color: Colors.black),),
-                          Text(vehicleInfo.permanentAddress.toString(), style: const TextStyle(fontSize: 16,fontWeight: FontWeight.w400,color: Colors.orangeAccent))
+                          Text(vehicleInfo.permanentAddress.toString(), style: const TextStyle(fontSize: 16,fontWeight: FontWeight.w400,color: Color(0xFFFFCA00)))
                         ],
                       ),
                       Row(
                         children: <Widget>[
                           const Text('Model: ', style: TextStyle(fontSize: 16,fontWeight: FontWeight.w600,color: Colors.black),),
-                          Text(vehicleInfo.manufacturerModel.toString(), style: const TextStyle(fontSize: 16,fontWeight: FontWeight.w400,color: Colors.orangeAccent))
+                          Text(vehicleInfo.manufacturerModel.toString(), style: const TextStyle(fontSize: 16,fontWeight: FontWeight.w400,color: Color(0xFFFFCA00)))
                         ],
                       ),
                       Row(
                         children: <Widget>[
                           const Text('Manufacturer: ', style: TextStyle(fontSize: 16,fontWeight: FontWeight.w600,color: Colors.black),),
-                          Text(vehicleInfo.manufacturer.toString(), style: const TextStyle(fontSize: 16,fontWeight: FontWeight.w400,color: Colors.orangeAccent))
+                          Text(vehicleInfo.manufacturer.toString(), style: const TextStyle(fontSize: 16,fontWeight: FontWeight.w400,color: Color(0xFFFFCA00)))
                         ],
                       ),
                       Row(
                         children: <Widget>[
                           const Text('Colour: ', style: TextStyle(fontSize: 16,fontWeight: FontWeight.w600,color: Colors.black),),
-                          Text(vehicleInfo.colour.toString(), style: const TextStyle(fontSize: 16,fontWeight: FontWeight.w400,color: Colors.orangeAccent))
+                          Text(vehicleInfo.colour.toString(), style: const TextStyle(fontSize: 16,fontWeight: FontWeight.w400,color: Color(0xFFFFCA00)))
                         ],
                       )
 
@@ -411,9 +410,8 @@ class _CameraState extends State<Camera> {
                 child:TextButton(
                   onPressed: postData,
                   child: Text('Submit',style: TextStyle(color: Colors.white),),
-                ),style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.green)),
+                ),style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Color(0xFFFFCA00))),
               ),
-
             //  Text("Number Plate: ${scannedText}",
             //   style: const TextStyle(
             //     fontSize: 16,
