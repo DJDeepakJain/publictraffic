@@ -24,16 +24,20 @@ class _BottomNavigationState extends State<BottomNavigation> {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: CurvedNavigationBar(
-        backgroundColor: Colors.transparent,
+        backgroundColor: const Color(0xff17407d),
+        color: const Color(0xff17407d),
+        buttonBackgroundColor: const Color(0xff17407d),
         index: _selectedIndex,
         items: const [
           Icon(
             Icons.dashboard,
             size: 30,
+            color: Color(0xffFFCA00),
           ),
           Icon(
             Icons.camera,
             size: 30,
+            color: Color(0xffFFCA00),
           ),
           // IconButton(
           //   onPressed: () async {
@@ -54,6 +58,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
           Icon(
             Icons.person,
             size: 30,
+            color: Color(0xffFFCA00),
           ),
         ],
         onTap: (index) {
