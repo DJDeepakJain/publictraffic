@@ -31,6 +31,7 @@ class Dashboard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0x0017407d),
         appBar: AppBar(
           title: const Text("Dashboard"),
         ),
@@ -64,6 +65,7 @@ class Dashboard extends StatelessWidget {
             return Column(
               children: [
                 Card(
+                  color:const Color(0x00ffca00),
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: ListTile(
@@ -73,9 +75,17 @@ class Dashboard extends StatelessWidget {
                         backgroundImage:
                         NetworkImage('$profileImage${thisItem['Photos']}'),
                       ),
-                        title: Text('${thisItem['VehicleNo']}'),
-                        subtitle: Text('${thisItem['Violation']}'),
-                        trailing: Text('₹${thisItem['Reward']}'),
+                        title: Text('${thisItem['VehicleNo']}',style: const TextStyle(
+                          color:  Color(0x0017407d),
+                        ),
+                        ),
+                        subtitle: Text('${thisItem['Violation']}',style: const TextStyle(
+            color:  Color(0x0017407d),),
+                        ),
+                        trailing: Text('₹${thisItem['Reward']}',style: const TextStyle(
+            color:  Color(0x0017407d),)
+                        ),
+
 
                         onTap: () {
                           Navigator.of(context).push(MaterialPageRoute(
