@@ -32,7 +32,11 @@ class Dashboard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text("Dashboard"),
+          backgroundColor: const Color(0xff17407d),
+          elevation: 2.0,
+          title: const Text("Dashboard",style: TextStyle(
+            color: Colors.white
+          ),),
         ),
         body:FutureBuilder(
           future: fetchData(),
@@ -63,27 +67,39 @@ class Dashboard extends StatelessWidget {
             Map thisItem = info[index];
             return Column(
               children: [
-                Card(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ListTile(
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Card(
+                    color:const Color(0xff17407d),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: ListTile(
 
-                      leading: CircleAvatar(
-                        backgroundColor: Colors.amber,
-                        backgroundImage:
-                        NetworkImage('$profileImage${thisItem['Photos']}'),
+                        leading: CircleAvatar(
+                          backgroundColor: Colors.amber,
+                          backgroundImage:
+                          NetworkImage('$profileImage${thisItem['Photos']}'),
+                        ),
+                          title: Text('${thisItem['VehicleNo']}',style: const TextStyle(
+                            color:  Colors.white,
+                          ),
+                          ),
+                          subtitle: Text('${thisItem['Violation']}',style: const TextStyle(
+            color:  Colors.white,),
+                          ),
+                          trailing: Text('₹${thisItem['Reward']}',style: const TextStyle(
+            color:  Colors.white,)
+                          ),
+
+
+                          onTap: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) =>
+                                    ItemDetail(thisItem['id'])));
+                          },
                       ),
-                        title: Text('${thisItem['VehicleNo']}'),
-                        subtitle: Text('${thisItem['Violation']}'),
-                        trailing: Text('₹${thisItem['Reward']}'),
-
-                        onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) =>
-                                  ItemDetail(thisItem['id'])));
-                        },
-                    ),
-                                        ),
+                                          ),
+                  ),
                 )
               ],
             );

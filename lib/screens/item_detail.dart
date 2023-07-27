@@ -35,7 +35,11 @@ class ItemDetail extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Details"),
+        foregroundColor: Colors.white,
+        backgroundColor: const Color(0xff17407d),
+        title: const Text("Details",style: TextStyle(
+          color: Colors.white
+        ),),
       ),
         body:FutureBuilder(
           future: fetchData(),
@@ -65,6 +69,8 @@ class ItemDetail extends StatelessWidget {
     itemCount: info.length,
     itemBuilder: (context,index) {
       Map thisItem = info[index];
+
+      double reward = double.parse(thisItem["Reward"]) * rewardValue;
       return (Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -113,10 +119,11 @@ class ItemDetail extends StatelessWidget {
                 const Text(" Vehicle No : ",
                   style: TextStyle(
                       fontSize: 20, fontWeight: FontWeight.w400),),
+
                 Expanded(
                   child: Text('${thisItem['VehicleNo']}',
                     style: const TextStyle(
-                        fontSize: 20, fontWeight: FontWeight.w400),),
+                        fontSize: 20, fontWeight: FontWeight.w400,color: Color(0xff17407d)),),
                 )
               ],
             ),
@@ -134,7 +141,7 @@ class ItemDetail extends StatelessWidget {
                 Text(
                   " ${thisItem['Violation']}",
                   style: const TextStyle(
-                      fontSize: 16, fontWeight: FontWeight.w400),
+                      fontSize: 16, fontWeight: FontWeight.w400,color: Color(0xff17407d)),
                 ),
               ],
             ),
@@ -152,7 +159,7 @@ class ItemDetail extends StatelessWidget {
           ),
 
           Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.fromLTRB(32, 8, 32, 8),
             child: Row(
               children: [
                 const Text(
@@ -164,16 +171,16 @@ class ItemDetail extends StatelessWidget {
                 if (thisItem['Status'] == "1")
                   const Text('Accepted',
                   style: TextStyle(
-                      fontSize: 16, fontWeight: FontWeight.w300),
+                      fontSize: 16, fontWeight: FontWeight.w300,color: Color(0xff17407d)),
                 )
                 else  if (thisItem['Status'] == "0")const Text(
       'Processing',
       style: TextStyle(
-      fontSize: 16, fontWeight: FontWeight.w300),
+      fontSize: 16, fontWeight: FontWeight.w300,color: Color(0xff17407d)),
       ) else  if (thisItem['Status'] == "2")const Text(
                   'Rejected',
                   style: TextStyle(
-                      fontSize: 16, fontWeight: FontWeight.w300),
+                      fontSize: 16, fontWeight: FontWeight.w300,color: Color(0xff17407d)),
                 )
       ],
             ),
@@ -185,7 +192,7 @@ class ItemDetail extends StatelessWidget {
             color: Colors.grey,
           ),
           if (thisItem['Status'] == "1") Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.fromLTRB(32, 8, 32, 8),
             child: Row(
               children: [
                 const Text(
@@ -194,9 +201,9 @@ class ItemDetail extends StatelessWidget {
                       fontSize: 20, fontWeight: FontWeight.w600),
                 ),
                 Text(
-                  '₹${thisItem['Reward']}',
+                  '₹$reward',
                   style: const TextStyle(
-                      fontSize: 16, fontWeight: FontWeight.w300),
+                      fontSize: 16, fontWeight: FontWeight.w300,color: Color(0xff17407d)),
                 ),
               ],
             ),
@@ -221,7 +228,7 @@ class ItemDetail extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.fromLTRB(32, 8, 32, 8),
             child: Row(
               children: [
                 const Text(
@@ -230,11 +237,11 @@ class ItemDetail extends StatelessWidget {
                 ),
                 Text(
                     '${thisItem['Locality']}'
-                ),
+                ,style: TextStyle(color: Color(0xff17407d)),),
 
                 Text(
                     '${thisItem[' PostalCode']}'
-                ),
+                ,style: TextStyle(color: Color(0xff17407d)),),
               ],
             ),
           ),
@@ -245,7 +252,7 @@ class ItemDetail extends StatelessWidget {
             color: Colors.grey,
           ),
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.fromLTRB(32, 8, 32, 8),
             child: Row(
               children: [
                 const Text(
@@ -255,7 +262,7 @@ class ItemDetail extends StatelessWidget {
                 ),
                 Text(
                   '${thisItem['Latitude']}',
-                  style: const TextStyle(fontSize: 16),
+                  style: const TextStyle(fontSize: 16,color: Color(0xff17407d)),
                 ),
               ],
             ),
@@ -267,7 +274,7 @@ class ItemDetail extends StatelessWidget {
             color: Colors.grey,
           ),
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.fromLTRB(32, 8, 32, 8),
             child: Row(
               children: [
                 const Text(
@@ -277,7 +284,7 @@ class ItemDetail extends StatelessWidget {
                 ),
                 Text(
                   '${thisItem['Longitude']}',
-                  style: const TextStyle(fontSize: 16),
+                  style: const TextStyle(fontSize: 16,color: Color(0xff17407d)),
                 ),
               ],
             ),
